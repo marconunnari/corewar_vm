@@ -2,6 +2,5 @@
 .comment "test"
 
 l1: ld %42, r2
-#st r2, 100
-#fork %100
-#st r2, 150
+ld :l1, r2
+st r2, 100
