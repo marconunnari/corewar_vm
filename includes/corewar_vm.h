@@ -22,5 +22,6 @@
 
 typedef unsigned char	byte;
 
-void		check_magic(char *filename);
+void		check_magic(char *filename, int fd);
+void		get_player_name(char *filename, int fd, char *player_name);
 #endif
