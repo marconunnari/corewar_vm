@@ -19,7 +19,7 @@ DOBJS=objs
 DSRCS=srcs
 HEADER=includes/corewar_vm.h
 
-SRCS_FILES= main #new#
+SRCS_FILES= main check_magic #new#
 
 SRCS = $(addprefix $(DSRCS)/, $(addsuffix .c, $(SRCS_FILES)))
 OBJS = $(SRCS:$(DSRCS)/%.c=$(DOBJS)/%.o)

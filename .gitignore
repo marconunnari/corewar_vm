@@ -1,2 +1,3 @@
 abc
 *.cor
+objs/*.o
