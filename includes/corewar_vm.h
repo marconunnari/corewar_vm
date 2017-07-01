@@ -19,16 +19,32 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <stdio.h>
+# include <inttypes.h>
 
-typedef unsigned char	t_byte;
-typedef unsigned int	t_uint;
-typedef unsigned long	t_luint;
+typedef struct	s_op
+{
+	char		*name;
+	uint8_t		args_nbr;
+	int			args_types[3];
+	uint8_t		code;
+	uint32_t	cycles;
+	char		*comment;
+	uint8_t		types_encod;
+	uint8_t		indexes;
+}				t_op;
 
-int		is_little_endian();
-void		reverse_endian(const long long int size, t_byte *value);
+typedef struct	s_player
+{
+	char		*filename;
+	int			fd;
+	char		name[PROG_NAME_LENGTH + 1];
+	char		comment[COMMENT_LENGTH + 1];
+	uint32_t	size;
+}				t_player;
 
-void		check_magic(char *filename, int fd);
-void		get_player_name(char *filename, int fd, char *player_name);
-void		get_player_size(char *filename, int fd, t_luint *player_size);
-void		get_player_comment(char *filename, int fd, char *player_comment);
+int				is_little_endian();
+void			reverse_endian(int size, uint8_t *value);
+
+void			pexit(char *filename);
+t_player		parse_player(char *filename);
 #endif

@@ -14,7 +14,7 @@
 */
 int		is_little_endian()
 {
-	t_uint	i;
+	uint32_t	i;
 	char		*c;
 
 	i = 1;
@@ -29,10 +29,10 @@ int		is_little_endian()
 ** reverse the endiannes:
 ** put the last byte in first, the first in the last and so on
 */
-void		reverse_endian(const long long int size, t_byte *value)
+void		reverse_endian(int size, uint8_t *value)
 {
-	int	i;
-	t_byte	tmp[32];
+	int			i;
+	uint8_t		tmp[32];
 
 	i = 0;
 	while (i < size)
