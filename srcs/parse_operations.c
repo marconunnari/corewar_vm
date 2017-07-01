@@ -16,7 +16,7 @@ void			parse_operations(char *filename, int fd)
 	uint8_t		buf1;
 //	uint16_t	buf2;
 //	uint32_t	buf4;
-	uint8_t		types[4];
+	uint8_t		types[MAX_ARGS_NUMBER];
 	int			i;
 	int			j;
 

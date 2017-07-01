@@ -1,6 +1,8 @@
 #include "corewar_vm.h"
 
-void	pexit(char *filename)
+uint8_t		memory[MEM_SIZE];
+
+void		pexit(char *filename)
 {
 	perror(filename);
 	exit(0);
@@ -8,16 +10,18 @@ void	pexit(char *filename)
 
 int		main(int argc, char **argv)
 {
-	int		i;
 	t_player	player;
+	uint32_t	i;
 
-	i = 1;
-	while (i < argc)
+	player = parse_player(argv[argc - 1]);
+	ft_printfnl("player '%s' fat |%u| that say '%s'",
+		player.name, player.size, player.comment);
+	i = 0;
+	while (i < player.size)
 	{
-		player = parse_player(argv[i]);
-		ft_printfnl("player '%s' fat |%u| that say '%s'",
-				player.name, player.size, player.comment);
-		load(player);
+		ft_printf("%02x ", memory[i]);
+		if (i % 16 == 15)
+			ft_putchar('\n');
 		i++;
 	}
 }

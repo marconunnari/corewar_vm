@@ -1,5 +1,7 @@
 #include "corewar_vm.h"
 
+extern uint8_t	memory[MEM_SIZE];
+
 /*
 ** check that the first 4 four bytes of the executable file are
 ** equals to the 4 bytes of the magic number
@@ -78,6 +80,8 @@ t_player	parse_player(char *filename)
 	get_player_name(&player);
 	get_player_size(&player);
 	get_player_comment(&player);
+	lseek(player.fd, 4, SEEK_CUR);
+	read(player.fd, memory, CHAMP_MAX_SIZE);
 	if (close(player.fd) == -1)
 		pexit(player.filename);
 	return (player);
