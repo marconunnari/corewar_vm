@@ -68,6 +68,7 @@ void		get_player_comment(t_player *player)
 /*
 ** check and get name, comment and size of the player specified
 ** from the filename passed as command line
+** then load the player in memory
 */
 t_player	parse_player(char *filename)
 {

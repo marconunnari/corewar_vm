@@ -24,4 +24,5 @@ int		main(int argc, char **argv)
 			ft_putchar('\n');
 		i++;
 	}
+	ft_putchar('\n');
 }
