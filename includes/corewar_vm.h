@@ -20,8 +20,15 @@
 # include <fcntl.h>
 # include <stdio.h>
 
-typedef unsigned char	byte;
+typedef unsigned char	t_byte;
+typedef unsigned int	t_uint;
+typedef unsigned long	t_luint;
+
+int		is_little_endian();
+void		reverse_endian(const long long int size, t_byte *value);
 
 void		check_magic(char *filename, int fd);
 void		get_player_name(char *filename, int fd, char *player_name);
+void		get_player_size(char *filename, int fd, t_luint *player_size);
+void		get_player_comment(char *filename, int fd, char *player_comment);
 #endif
