@@ -58,5 +58,6 @@ uint8_t			get_memory_at(int i);
 void			pexit(char *filename);
 t_player		parse_player(char *filename);
 
+void			get_op_args(t_op *op, t_process *process, int32_t *args);
 void			exec_process(t_process *process);
 #endif
