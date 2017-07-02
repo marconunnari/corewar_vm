@@ -14,11 +14,11 @@ void		check_magic(t_player *player)
 
 	ret = read(player->fd, &buf, 4);
 	if (ret < 4)
-		ft_err(1, "%s: not a corewar eecutable", player->filename);
+		ft_err(1, "%s: not a corewar executable", player->filename);
 	if (is_little_endian())
 		reverse_endian((int)sizeof(buf), (uint8_t*)&buf);
 	if (buf != COREWAR_EXEC_MAGIC)
-		ft_err(1, "%s: not a corewar eecutable", player->filename);
+		ft_err(1, "%s: not a corewar executable", player->filename);
 }
 
 /*

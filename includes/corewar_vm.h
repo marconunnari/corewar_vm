@@ -23,15 +23,22 @@
 
 typedef struct	s_op
 {
-	char		*name;
+	char		*mnemonic;
 	uint8_t		args_nbr;
-	int			args_types[3];
-	uint8_t		code;
+	t_arg_type	args_types[3];
+	uint8_t		opcode;
 	uint32_t	cycles;
 	char		*comment;
 	uint8_t		types_encod;
 	uint8_t		indexes;
 }				t_op;
+
+typedef struct	s_process
+{
+	uint8_t		registries[REG_NUMBER][REG_SIZE];
+	uint16_t	pc;
+	char		carry;
+}				t_process;
 
 typedef struct	s_player
 {
@@ -40,11 +47,16 @@ typedef struct	s_player
 	char		name[PROG_NAME_LENGTH + 1];
 	char		comment[COMMENT_LENGTH + 1];
 	uint32_t	size;
+	int			number;
 }				t_player;
 
 int				is_little_endian();
 void			reverse_endian(int size, uint8_t *value);
 
+uint8_t			get_memory_at(int i);
+
 void			pexit(char *filename);
 t_player		parse_player(char *filename);
+
+void			exec_process(t_process *process);
 #endif

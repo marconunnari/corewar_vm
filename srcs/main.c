@@ -8,21 +8,34 @@ void		pexit(char *filename)
 	exit(0);
 }
 
+/*
+** get memory at index
+** considering that memory is circular
+*/
+uint8_t		get_memory_at(int i)
+{
+	return (memory[i % MEM_SIZE]);
+}
+
+t_process	new_process(uint8_t *r1, uint16_t pc, char carry)
+{
+	t_process	process;
+
+	ft_memcpy(process.registries[0], r1, REG_SIZE);
+	process.pc = pc;
+	process.carry = carry;
+	return (process);
+}
+
 int		main(int argc, char **argv)
 {
 	t_player	player;
-	uint32_t	i;
+	t_process	process;
 
 	player = parse_player(argv[argc - 1]);
-	ft_printfnl("player '%s' fat |%u| that say '%s'",
-		player.name, player.size, player.comment);
-	i = 0;
-	while (i < player.size)
-	{
-		ft_printf("%02x ", memory[i]);
-		if (i % 16 == 15)
-			ft_putchar('\n');
-		i++;
-	}
-	ft_putchar('\n');
+	player.number = -2;
+	ft_printfnl("player n. %d called '%s' fat |%u| that say '%s'",
+		player.number, player.name, player.size, player.comment);
+	process = new_process((uint8_t *)&player.number, 0, 0);
+	exec_process(&process);
 }
