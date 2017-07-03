@@ -19,7 +19,7 @@ DOBJS=objs
 DSRCS=srcs
 HEADER=includes/corewar_vm.h
 
-SRCS_FILES= main op parse_player endian exec_process get_op_args #new#
+SRCS_FILES= main op parse_player endian exec get_op_args output #new#
 
 SRCS = $(addprefix $(DSRCS)/, $(addsuffix .c, $(SRCS_FILES)))
 OBJS = $(SRCS:$(DSRCS)/%.c=$(DOBJS)/%.o)
