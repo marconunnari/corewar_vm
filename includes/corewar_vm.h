@@ -35,7 +35,7 @@ typedef struct	s_op
 
 typedef struct	s_process
 {
-	uint8_t		registries[REG_NUMBER][REG_SIZE];
+	int		registries[REG_NUMBER]; //TODO: consider REG_SIZE?!
 	uint16_t	pc;
 	char		carry;
 	int		wait;
@@ -54,7 +54,9 @@ typedef struct	s_player
 int				is_little_endian();
 void			reverse_endian(int size, uint8_t *value);
 
-uint8_t			get_memory_at(int i);
+uint8_t			get_uint8_at(int i);
+uint16_t			get_uint16_at(int i);
+uint32_t			get_uint32_at(int i);
 
 void			print_memory();
 void			pexit(char *filename);
@@ -63,4 +65,8 @@ t_player		parse_player(char *filename);
 
 void			get_op_args(t_op *op, t_process *process, int32_t *args);
 void			exec(t_list *processes);
+
+void			sti(t_process *process, t_op *op, int *args);
+void			ld(t_process *process, t_op *op, int *args);
+void			aff(t_process *process, t_op *op, int *args);
 #endif

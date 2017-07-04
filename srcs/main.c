@@ -2,21 +2,12 @@
 
 uint8_t		memory[MEM_SIZE];
 
-/*
-** get memory at index
-** considering that memory is circular
-*/
-uint8_t		get_memory_at(int i)
-{
-	return (memory[i % MEM_SIZE]);
-}
-
-t_process	*new_process(uint8_t *player_number, uint16_t pc, char carry)
+t_process	*new_process(int player_number, uint16_t pc, char carry)
 {
 	t_process	*process;
 
 	process = (t_process*)malloc(sizeof(t_process));
-	ft_memcpy(process->registries[0], player_number, REG_SIZE);
+	process->registries[0] = player_number;
 	process->pc = pc;
 	process->carry = carry;
 	process->wait = -1;
@@ -50,7 +41,7 @@ int		get_players(int argc, char **argv, t_player *players)
 
 /*
 ** load the players in memory
-** create a process for each player and add it to the processes stack
+** create a process for each player and add it to the stack of processes
 */
 void		init_players(t_player *players, int players_nbr, t_list **processes)
 {
@@ -66,7 +57,7 @@ void		init_players(t_player *players, int players_nbr, t_list **processes)
 		read(player.fd, &memory[(MEM_SIZE / players_nbr) * i], CHAMP_MAX_SIZE);
 		if (close(player.fd) == -1)
 			pexit(player.filename);
-		process = new_process((uint8_t *)&player.number,
+		process = new_process(player.number,
 				(MEM_SIZE / players_nbr) * i, 0);
 		ft_lstaddnew(processes, process, sizeof(t_process));
 		i++;

@@ -42,13 +42,13 @@ void			boh(t_list *processes)
 		process = (t_process*)processes->content;
 		if (process->wait == -1)
 		{
-			op = get_op(get_memory_at(process->pc));
+			op = get_op(get_uint8_at(process->pc));
 			if (op)
 				process->wait = op->cycles - 2;
 		}
 		else if (process->wait == 0)
 		{
-			op = get_op(get_memory_at(process->pc++));
+			op = get_op(get_uint8_at(process->pc++));
 			if (op)
 			{
 				get_op_args(op, process, args);
@@ -71,7 +71,7 @@ void			exec(t_list *processes)
 	cycle = 1;
 	while (1)
 	{
-		ft_printfnl("cycle %ju", cycle);
+//		ft_printfnl("cycle %ju", cycle);
 		boh(processes);
 		if (cycle == MEM_SIZE)
 			break;

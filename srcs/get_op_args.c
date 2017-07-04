@@ -50,18 +50,17 @@ int32_t			get_arg(t_process *process, t_arg_type arg_type, char are_indexes)
 	size = get_arg_size(arg_type, are_indexes);
 	if (size == 1)
 	{
-		arg1 = get_memory_at(process->pc + 0);
+		arg1 = get_uint8_at(process->pc);
 		arg4 = arg1;
 	}
 	else if (size == 2)
 	{
-		arg2 = get_memory_at(process->pc + 0) << 8 | get_memory_at(process->pc + 1);
+		arg2 = get_uint16_at(process->pc);
 		arg4 = arg2;
 	}
 	else if (size == 4)
 	{
-		arg4 = get_memory_at(process->pc + 0) << 24 | get_memory_at(process->pc + 1) << 16 |
-			get_memory_at(process->pc + 2) << 8 | get_memory_at(process->pc + 3);
+		arg4 = get_uint32_at(process->pc);
 	}
 	process->pc += size;
 	return (arg4);
@@ -79,7 +78,7 @@ void			get_op_args(t_op *op, t_process *process, int32_t *args)
 
 	encod = 0;
 	if (op->types_encod)
-		encod = get_memory_at(process->pc++);
+		encod = get_uint8_at(process->pc++);
 	i = 0;
 	while (i < op->args_nbr)
 	{
