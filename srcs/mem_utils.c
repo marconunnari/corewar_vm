@@ -35,3 +35,11 @@ uint32_t		get_uint32_at(int i)
 		memory[(i + 2) % MEM_SIZE] << 8 | memory[(i + 3) % MEM_SIZE];
 	return (res);
 }
+
+/*
+** set four bytes of memory starting at index [i] to the four bytes of [val]
+*/
+void			set_uint32(int i, uint32_t val)
+{
+	ft_memcpy(&memory[i], &val, 4);
+}

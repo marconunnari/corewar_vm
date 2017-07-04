@@ -21,7 +21,11 @@
 # include <stdio.h>
 # include <inttypes.h>
 
-typedef struct	s_op
+typedef struct	s_op		t_op;
+typedef struct	s_process	t_process;
+typedef			void(*t_oprun)(t_list*, t_op*, int*);
+
+struct	s_op
 {
 	char		*mnemonic;
 	uint8_t		args_nbr;
@@ -31,15 +35,16 @@ typedef struct	s_op
 	char		*comment;
 	uint8_t		types_encod;
 	uint8_t		indexes;
-}				t_op;
+	t_oprun		run;
+};
 
-typedef struct	s_process
+struct	s_process
 {
 	int		registries[REG_NUMBER]; //TODO: consider REG_SIZE?!
 	uint16_t	pc;
 	char		carry;
 	int		wait;
-}				t_process;
+};
 
 typedef struct	s_player
 {
@@ -54,6 +59,7 @@ typedef struct	s_player
 int				is_little_endian();
 void			reverse_endian(int size, uint8_t *value);
 
+void			set_uint32(int i, uint32_t val);
 uint8_t			get_uint8_at(int i);
 uint16_t			get_uint16_at(int i);
 uint32_t			get_uint32_at(int i);
@@ -66,7 +72,13 @@ t_player		parse_player(char *filename);
 void			get_op_args(t_op *op, t_process *process, int32_t *args);
 void			exec(t_list *processes);
 
-void			sti(t_process *process, t_op *op, int *args);
-void			ld(t_process *process, t_op *op, int *args);
-void			aff(t_process *process, t_op *op, int *args);
+void			sti(t_list *processes, t_op *op, int *args);
+void			ld(t_list *processes, t_op *op, int *args);
+void			aff(t_list *processes, t_op *op, int *args);
+
+int				is_reg_valid(int reg);
+int				get_reg_val(t_process *process, int reg);
+int				get_reg_val_first(t_list *processes, int reg);
+void				set_reg_val(t_process *process, int reg, int val);
+void				set_reg_val_first(t_list *processes, int reg, int val);
 #endif

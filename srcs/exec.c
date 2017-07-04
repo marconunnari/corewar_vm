@@ -52,7 +52,7 @@ void			boh(t_list *processes)
 			if (op)
 			{
 				get_op_args(op, process, args);
-				exec_op(op, args);
+				op->run(processes, op, args);
 			}
 			else
 				process->pc++;

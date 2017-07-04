@@ -1,6 +1,9 @@
 .name "test"
 .comment "test"
 
+ld %97, r2
+sti r2, %:load, %1
+
 #live %42        # 01 | 00 00 00 2a
 
 #ld 42, r1       # 02 | d0 | 00 2a | 01
