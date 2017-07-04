@@ -37,9 +37,29 @@ uint8_t			get_arg_size(t_arg_type arg_type, char are_indexes)
 }
 
 /*
-** get arg and increase the pc base on arg type
+** increase the pc of the process based on the sizes of the arguments
 */
-int32_t			get_arg(t_process *process, t_arg_type arg_type, char are_indexes)
+void			increase_pc(t_process *process, t_op *op)
+{
+	int		i;
+
+	if (op->types_encod)
+		process->pc++;
+	i = 0;
+	while (i < op->args_nbr)
+	{
+//		ft_printfnl("debug pc %d", process->pc);
+		process->pc += get_arg_size(op->args_types[i], op->indexes);
+//		ft_printfnl("debug pc %d", process->pc);
+//ft_printfnl("");
+		i++;
+	}
+}
+
+/*
+** get arg based on arg type
+*/
+int32_t			get_arg(int *idx, t_arg_type arg_type, char are_indexes)
 {
 	uint8_t		size;
 	int8_t		arg1;
@@ -50,35 +70,34 @@ int32_t			get_arg(t_process *process, t_arg_type arg_type, char are_indexes)
 	size = get_arg_size(arg_type, are_indexes);
 	if (size == 1)
 	{
-		arg1 = get_uint8_at(process->pc);
+		arg1 = get_uint8_at(*idx);
 		arg4 = arg1;
 	}
 	else if (size == 2)
 	{
-		arg2 = get_uint16_at(process->pc);
+		arg2 = get_uint16_at(*idx);
 		arg4 = arg2;
 	}
 	else if (size == 4)
 	{
-		arg4 = get_uint32_at(process->pc);
+		arg4 = get_uint32_at(*idx);
 	}
-	process->pc += size;
+	*idx += size;
 	return (arg4);
 }
 
 /*
 ** get the arguments of one operation
-** increase the pc of the process
-** put the argument int the args array
+** put the arguments into the args array
 */
-void			get_op_args(t_op *op, t_process *process, int32_t *args)
+void			get_op_args(t_op *op, int idx, int32_t *args)
 {
 	uint8_t		i;
 	uint8_t		encod;
 
 	encod = 0;
 	if (op->types_encod)
-		encod = get_uint8_at(process->pc++);
+		encod = get_uint8_at(idx++);
 	i = 0;
 	while (i < op->args_nbr)
 	{
@@ -90,7 +109,7 @@ void			get_op_args(t_op *op, t_process *process, int32_t *args)
 	while (i < MAX_ARGS_NUMBER)
 	{
 		if (i < op->args_nbr)
-			args[i] = get_arg(process, op->args_types[i], op->indexes);
+			args[i] = get_arg(&idx, op->args_types[i], op->indexes);
 		else
 			args[i] = 0;
 		i++;

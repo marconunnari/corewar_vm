@@ -76,7 +76,10 @@ t_player	parse_player(char *filename)
 
 	player.filename = filename;
 	if ((player.fd = open(player.filename, O_RDONLY)) == -1)
-		pexit(player.filename);
+	{
+		perror(filename);
+		exit(0);
+	}
 	check_magic(&player);
 	get_player_name(&player);
 	get_player_size(&player);

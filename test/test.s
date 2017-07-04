@@ -2,7 +2,7 @@
 .comment "test"
 
 ld %97, r2
-sti r2, %:load, %1
+aff r2
 
 #live %42        # 01 | 00 00 00 2a
 

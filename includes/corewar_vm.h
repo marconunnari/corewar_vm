@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/30 16:47:13 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/06/30 16:52:52 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/07/04 21:03:27 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 
 typedef struct	s_op		t_op;
 typedef struct	s_process	t_process;
-typedef			void(*t_oprun)(t_list*, t_op*, int*);
+typedef			void(*t_oprun)(t_list*, t_process *process, t_op*, int*);
 
 struct	s_op
 {
@@ -65,20 +65,22 @@ uint16_t			get_uint16_at(int i);
 uint32_t			get_uint32_at(int i);
 
 void			print_memory();
-void			pexit(char *filename);
 
 t_player		parse_player(char *filename);
 
-void			get_op_args(t_op *op, t_process *process, int32_t *args);
+void			get_op_args(t_op *op, int idx, int32_t *args);
+void			increase_pc(t_process *process, t_op *op);
 void			exec(t_list *processes);
 
-void			sti(t_list *processes, t_op *op, int *args);
-void			ld(t_list *processes, t_op *op, int *args);
-void			aff(t_list *processes, t_op *op, int *args);
+void			sti(t_list *processes, t_process *process, t_op *op, int *args);
+void			ld(t_list *processes, t_process *process, t_op *op, int *args);
+void			aff(t_list *processes, t_process *process, t_op *op, int *args);
+void			xor(t_list *processes, t_process *process, t_op *op, int *args);
+void			zjmp(t_list *processes, t_process *process, t_op *op, int *args);
+void			add(t_list *processes, t_process *process, t_op *op, int *args);
 
 int				is_reg_valid(int reg);
 int				get_reg_val(t_process *process, int reg);
-int				get_reg_val_first(t_list *processes, int reg);
-void				set_reg_val(t_process *process, int reg, int val);
-void				set_reg_val_first(t_list *processes, int reg, int val);
+void			set_reg_val(t_process *process, int reg, int val);
+int				parse_arg(t_arg_type type, int val, int *arg, t_process *process);
 #endif

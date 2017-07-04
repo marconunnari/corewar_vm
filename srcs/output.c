@@ -2,16 +2,11 @@
 
 uint8_t		memory[MEM_SIZE];
 
-void		pexit(char *filename)
-{
-	perror(filename);
-	exit(0);
-}
-
 void		print_memory()
 {
 	int	i;
 
+	i = 0;
 	while (i < MEM_SIZE)
 	{
 		if (i % 32 == 0)

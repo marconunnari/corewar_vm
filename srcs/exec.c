@@ -48,11 +48,15 @@ void			boh(t_list *processes)
 		}
 		else if (process->wait == 0)
 		{
-			op = get_op(get_uint8_at(process->pc++));
+			op = get_op(get_uint8_at(process->pc));
 			if (op)
 			{
-				get_op_args(op, process, args);
-				op->run(processes, op, args);
+				get_op_args(op, process->pc + 1, args);
+				//exec_op(op, args);
+				if (op->run)
+					op->run(processes, process, op, args);
+				process->pc++;
+				increase_pc(process, op);
 			}
 			else
 				process->pc++;

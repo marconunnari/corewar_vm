@@ -56,7 +56,10 @@ void		init_players(t_player *players, int players_nbr, t_list **processes)
 		lseek(player.fd, 4, SEEK_CUR);
 		read(player.fd, &memory[(MEM_SIZE / players_nbr) * i], CHAMP_MAX_SIZE);
 		if (close(player.fd) == -1)
-			pexit(player.filename);
+		{
+			perror(player.filename);
+			exit(0);
+		}
 		process = new_process(player.number,
 				(MEM_SIZE / players_nbr) * i, 0);
 		ft_lstaddnew(processes, process, sizeof(t_process));
@@ -67,7 +70,7 @@ void		init_players(t_player *players, int players_nbr, t_list **processes)
 int		main(int argc, char **argv)
 {
 	t_player	players[MAX_PLAYERS];
-	int		players_nbr;
+	int			players_nbr;
 	t_list		*processes;
 
 	players_nbr = get_players(argc, argv, players);
