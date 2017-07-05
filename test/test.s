@@ -1,8 +1,10 @@
 .name "test"
 .comment "test"
 
-ld %97, r2
-aff r2
+sti r1, %:live, %1
+live: live %42;
+ld %10000000, r2
+st r2, 100
 
 #live %42        # 01 | 00 00 00 2a
 

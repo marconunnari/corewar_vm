@@ -6,7 +6,7 @@
 /*   By: zaz <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/10/04 11:43:01 by zaz               #+#    #+#             */
-/*   Updated: 2017/07/04 21:03:50 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/07/05 19:32:55 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 t_op	g_op_tab[17] =
 {
-	{"live", 1, {T_DIR}, 1, 10, "alive", 0, 0, NULL},
+	{"live", 1, {T_DIR}, 1, 10, "alive", 0, 0, live},
 	{"ld", 2, {T_DIR | T_IND, T_REG}, 2, 5, "load", 1, 0, ld},
-	{"st", 2, {T_REG, T_IND | T_REG}, 3, 5, "store", 1, 0, NULL},
+	{"st", 2, {T_REG, T_IND | T_REG}, 3, 5, "store", 1, 0, st},
 	{"add", 3, {T_REG, T_REG, T_REG}, 4, 10, "addition", 1, 0, add},
 	{"sub", 3, {T_REG, T_REG, T_REG}, 5, 10, "soustraction", 1, 0, NULL},
 	{"and", 3, {T_REG | T_DIR | T_IND, T_REG | T_IND | T_DIR, T_REG}, 6, 6,
@@ -38,3 +38,20 @@ t_op	g_op_tab[17] =
 	{"aff", 1, {T_REG}, 16, 2, "aff", 1, 0, aff},
 	{0, 0, {0}, 0, 0, 0, 0, 0, NULL}
 };
+
+/*
+** get the operation from the operations array
+*/
+t_op			*get_op(uint8_t opcode)
+{
+	int			i;
+
+	i = 0;
+	while (g_op_tab[i].mnemonic)
+	{
+		if (g_op_tab[i].opcode == opcode)
+			return (&g_op_tab[i]);
+		i++;
+	}
+	return (NULL);
+}

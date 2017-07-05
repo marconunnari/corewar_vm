@@ -1,26 +1,6 @@
 #include "corewar_vm.h"
 
-extern t_op		g_op_tab[17];
-extern uint8_t	memory[MEM_SIZE];
-
-/*
-** get the operation from the operations array
-*/
-t_op			*get_op(uint8_t opcode)
-{
-	int			i;
-
-	i = 0;
-	while (g_op_tab[i].mnemonic)
-	{
-		if (g_op_tab[i].opcode == opcode)
-			return (&g_op_tab[i]);
-		i++;
-	}
-	return (NULL);
-}
-
-void			exec_op(t_op *op, int *args)
+void			print_op(t_op *op, int *args)
 {
 	int			i;
 
@@ -31,44 +11,55 @@ void			exec_op(t_op *op, int *args)
 	ft_putchar('\n');
 }
 
-void			boh(t_list *processes)
+void			start_waiting(t_vm *vm, t_process *process)
 {
-	t_process	*process;
+	t_op	*op;
+
+	op = get_op(get_uint8_at(vm, process->pc));
+	if (op)
+		process->wait = op->cycles - 2;
+}
+
+void			exec_op(t_vm *vm, t_process *process)
+{
 	t_op		*op;
 	int32_t			args[MAX_ARGS_NUMBER];
 
+	op = get_op(get_uint8_at(vm, process->pc));
+	if (op)
+	{
+		get_op_args(vm, op, process->pc + 1, args);
+		//print_op(op, args);
+		if (op->run)
+			op->run(vm, process, op, args);
+		process->pc++;
+		increase_pc(process, op);
+	}
+	else
+		process->pc++;
+	process->wait = -1;
+}
+
+void			do_cycle(t_vm *vm)
+{
+	t_list		*processes;
+	t_process	*process;
+
+	processes = vm->processes;
 	while(processes)
 	{
 		process = (t_process*)processes->content;
 		if (process->wait == -1)
-		{
-			op = get_op(get_uint8_at(process->pc));
-			if (op)
-				process->wait = op->cycles - 2;
-		}
+			start_waiting(vm, process);
 		else if (process->wait == 0)
-		{
-			op = get_op(get_uint8_at(process->pc));
-			if (op)
-			{
-				get_op_args(op, process->pc + 1, args);
-				//exec_op(op, args);
-				if (op->run)
-					op->run(processes, process, op, args);
-				process->pc++;
-				increase_pc(process, op);
-			}
-			else
-				process->pc++;
-			process->wait = -1;
-		}
+			exec_op(vm, process);
 		else
 			process->wait--;
 		processes = processes->next;
 	}
 }
 
-void			exec(t_list *processes)
+void			exec(t_vm *vm)
 {
 	uintmax_t	cycle;
 
@@ -76,7 +67,7 @@ void			exec(t_list *processes)
 	while (1)
 	{
 //		ft_printfnl("cycle %ju", cycle);
-		boh(processes);
+		do_cycle(vm);
 		if (cycle == MEM_SIZE)
 			break;
 		cycle++;

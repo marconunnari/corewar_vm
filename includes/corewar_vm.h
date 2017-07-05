@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/30 16:47:13 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/07/04 21:03:27 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/07/05 20:32:53 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,12 @@
 # include <inttypes.h>
 
 typedef struct	s_op		t_op;
+typedef struct	s_vm		t_vm;
+typedef struct	s_player	t_player;
 typedef struct	s_process	t_process;
-typedef			void(*t_oprun)(t_list*, t_process *process, t_op*, int*);
+typedef			void(*t_oprun)(t_vm *vm, t_process *process, t_op*, int*);
 
-struct	s_op
+struct			s_op
 {
 	char		*mnemonic;
 	uint8_t		args_nbr;
@@ -38,15 +40,15 @@ struct	s_op
 	t_oprun		run;
 };
 
-struct	s_process
+struct			s_process
 {
-	int		registries[REG_NUMBER]; //TODO: consider REG_SIZE?!
+	int			registries[REG_NUMBER]; //TODO: consider REG_SIZE?!
 	uint16_t	pc;
 	char		carry;
-	int		wait;
+	int			wait;
 };
 
-typedef struct	s_player
+struct			s_player
 {
 	char		*filename;
 	int			fd;
@@ -54,30 +56,42 @@ typedef struct	s_player
 	char		comment[COMMENT_LENGTH + 1];
 	uint32_t	size;
 	int			number;
-}				t_player;
+};
+
+struct			s_vm
+{
+	t_player	players[MAX_PLAYERS];
+	int			players_nbr;
+	uint8_t		memory[MEM_SIZE];
+	t_list		*processes;
+	int			last_alive;
+};
 
 int				is_little_endian();
 void			reverse_endian(int size, uint8_t *value);
 
-void			set_uint32(int i, uint32_t val);
-uint8_t			get_uint8_at(int i);
-uint16_t			get_uint16_at(int i);
-uint32_t			get_uint32_at(int i);
+void			set_uint32(t_vm *vm, int i, uint32_t val);
+uint8_t			get_uint8_at(t_vm *vm, int i);
+uint16_t		get_uint16_at(t_vm *vm, int i);
+uint32_t		get_uint32_at(t_vm *vm, int i);
 
 void			print_memory();
 
 t_player		parse_player(char *filename);
 
-void			get_op_args(t_op *op, int idx, int32_t *args);
+t_op			*get_op(uint8_t opcode);
+void			get_op_args(t_vm *vm, t_op *op, int idx, int32_t *args);
 void			increase_pc(t_process *process, t_op *op);
-void			exec(t_list *processes);
+void			exec(t_vm *vm);
 
-void			sti(t_list *processes, t_process *process, t_op *op, int *args);
-void			ld(t_list *processes, t_process *process, t_op *op, int *args);
-void			aff(t_list *processes, t_process *process, t_op *op, int *args);
-void			xor(t_list *processes, t_process *process, t_op *op, int *args);
-void			zjmp(t_list *processes, t_process *process, t_op *op, int *args);
-void			add(t_list *processes, t_process *process, t_op *op, int *args);
+void			st(t_vm *vm, t_process *process, t_op *op, int *args);
+void			sti(t_vm *vm, t_process *process, t_op *op, int *args);
+void			ld(t_vm *vm, t_process *process, t_op *op, int *args);
+void			aff(t_vm *vm, t_process *process, t_op *op, int *args);
+void			xor(t_vm *vm, t_process *process, t_op *op, int *args);
+void			zjmp(t_vm *vm, t_process *process, t_op *op, int *args);
+void			add(t_vm *vm, t_process *process, t_op *op, int *args);
+void			live(t_vm *vm, t_process *process, t_op *op, int *args);
 
 int				is_reg_valid(int reg);
 int				get_reg_val(t_process *process, int reg);

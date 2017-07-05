@@ -1,13 +1,13 @@
 #include "corewar_vm.h"
 
-void		xor(t_list *processes, t_process *process, t_op *op, int *args)
+void		xor(t_vm *vm, t_process *process, t_op *op, int *args)
 {
 	int		val1;
 	int		val2;
 	int		res;
 	int		reg;
 
-	(void)processes;
+	(void)vm;
 	(void)op;
 	if (op->args_types[0] == T_DIR)
 	{

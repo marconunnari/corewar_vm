@@ -1,8 +1,6 @@
 #include "corewar_vm.h"
 
-uint8_t		memory[MEM_SIZE];
-
-void		print_memory()
+void		print_memory(t_vm *vm)
 {
 	int	i;
 
@@ -11,7 +9,7 @@ void		print_memory()
 	{
 		if (i % 32 == 0)
 			ft_printf("%#06x:", i);
-		ft_printf(" %02x", memory[i]);
+		ft_printf(" %02x", vm->memory[i]);
 		if (i % 32 == 31)
 			ft_putchar('\n');
 		i++;
