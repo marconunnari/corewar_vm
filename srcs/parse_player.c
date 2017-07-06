@@ -25,7 +25,7 @@ void		check_magic(t_player *player)
 ** get the player name from the file:
 ** the number of bytes of player name is defined in op.h
 */
-void		get_player_name(t_player *player)
+void		parse_player_name(t_player *player)
 {
 	int		ret;
 
@@ -39,7 +39,7 @@ void		get_player_name(t_player *player)
 ** get the player size from the file:
 ** this is defined by the 4 bytes after player name
 */
-void		get_player_size(t_player *player)
+void		parse_player_size(t_player *player)
 {
 	int	ret;
 
@@ -55,7 +55,7 @@ void		get_player_size(t_player *player)
 ** get the player comment from the file:
 ** the number of bytes of player comment is defined in op.h
 */
-void		get_player_comment(t_player *player)
+void		parse_player_comment(t_player *player)
 {
 	int	ret;
 
@@ -81,8 +81,8 @@ t_player	parse_player(char *filename)
 		exit(0);
 	}
 	check_magic(&player);
-	get_player_name(&player);
-	get_player_size(&player);
-	get_player_comment(&player);
+	parse_player_name(&player);
+	parse_player_size(&player);
+	parse_player_comment(&player);
 	return (player);
 }

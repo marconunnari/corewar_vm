@@ -68,6 +68,11 @@ void			exec(t_vm *vm)
 	{
 //		ft_printfnl("cycle %ju", cycle);
 		do_cycle(vm);
+		if (vm->dump && cycle == vm->dump_cycle + 1)
+		{
+			print_memory(vm);
+			break;
+		}
 		if (cycle == MEM_SIZE)
 			break;
 		cycle++;

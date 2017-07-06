@@ -2,7 +2,7 @@
 .comment "test"
 
 sti r1, %:live, %1
-live: live %42;
+live: live %1
 ld %10000000, r2
 st r2, 100
 
