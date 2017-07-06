@@ -18,7 +18,7 @@ void		print_memory(t_vm *vm)
 
 void		print_usage()
 {
-	ft_printfnl("usage: corewar [-dump nbr_cycles] [[-n number] champion1.cor]");
+	ft_printfnl("usage: corewar [-d nbr_cycles] <[-n number] champion1.cor> <..>");
 	exit(0);
 }
 
