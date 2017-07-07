@@ -7,10 +7,10 @@ void		print_memory(t_vm *vm)
 	i = 0;
 	while (i < MEM_SIZE)
 	{
-		if (i % 32 == 0)
-			ft_printf("%#06x:", i);
-		ft_printf(" %02x", vm->memory[i]);
-		if (i % 32 == 31)
+		if (i % 64 == 0)
+			ft_printf("%s%#.4x : ", i == 0 ? "0x" : "",  i);
+		ft_printf("%02x ", vm->memory[i]);
+		if (i % 64 == 63)
 			ft_putchar('\n');
 		i++;
 	}
@@ -36,4 +36,10 @@ void		print_intro(t_vm *vm)
 				player.number, player.size, player.name, player.comment);
 		i++;
 	}
+}
+
+void		print_winner(t_vm *vm)
+{
+	ft_printfnl("Contestant %d, \"%s\", has won !",
+			vm->last_alive, get_player_name(vm, vm->last_alive));
 }

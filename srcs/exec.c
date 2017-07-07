@@ -71,7 +71,7 @@ void			exec(t_vm *vm)
 		if (vm->dump && cycle == vm->dump_cycle + 1)
 		{
 			print_memory(vm);
-			break;
+			exit(0);
 		}
 		if (cycle == MEM_SIZE)
 			break;

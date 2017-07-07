@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/30 16:47:13 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/07/06 19:47:34 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/07/07 23:28:05 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ struct			s_vm
 	int			last_alive;
 	uint8_t		dump;
 	uintmax_t	dump_cycle;
+	uint8_t		affiche;
 };
 
 int				is_little_endian();
@@ -80,11 +81,13 @@ uint32_t		get_uint32_at(t_vm *vm, int i);
 
 void			print_usage();
 void			print_intro(t_vm *vm);
+void			print_winner(t_vm *vm);
 void			print_memory();
 
 void			parse_args(char **argv, t_vm *vm);
 t_player		parse_player(char *filename);
 
+char			*get_player_name(t_vm *vm, int player_nbr);
 t_op			*get_op(uint8_t opcode);
 void			get_op_args(t_vm *vm, t_op *op, int idx, int32_t *args);
 void			increase_pc(t_process *process, t_op *op);

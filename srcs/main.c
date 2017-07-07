@@ -52,4 +52,5 @@ int		main(int argc, char **argv)
 	print_intro(&vm);
 	init_players(&vm);
 	exec(&vm);
+	print_winner(&vm);
 }

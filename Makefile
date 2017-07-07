@@ -6,7 +6,7 @@
 #    By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/06/09 14:31:16 by mnunnari          #+#    #+#              #
-#    Updated: 2017/07/06 18:14:09 by mnunnari         ###   ########.fr        #
+#    Updated: 2017/07/07 23:24:58 by mnunnari         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ DSRCS=srcs
 HEADER=includes/corewar_vm.h
 
 SRCS_FILES= main op parse_player endian exec get_op_args output mem_utils \
-		parse_args \
+		parse_args utils \
 		ops/reg_utils ops/st ops/sti ops/ld ops/aff ops/xor ops/zjmp ops/add \
 		ops/live #new#
 
