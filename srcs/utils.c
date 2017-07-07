@@ -15,3 +15,8 @@ char	*get_player_name(t_vm *vm, int player_nbr)
 	}
 	return (NULL);
 }
+
+void	increase_pc(t_process *process, int quantity)
+{
+	process->pc = (process->pc + quantity) % MEM_SIZE;
+}

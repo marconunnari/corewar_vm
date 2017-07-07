@@ -18,7 +18,7 @@ void		print_memory(t_vm *vm)
 
 void		print_usage()
 {
-	ft_printfnl("usage: corewar [-d nbr_cycles] <[-n number] champion1.cor> <..>");
+	ft_printfnl("usage: corewar [-d nbr_cycles] [-a] <[-n number] champion1.cor> <..>");
 	exit(0);
 }
 
@@ -42,4 +42,16 @@ void		print_winner(t_vm *vm)
 {
 	ft_printfnl("Contestant %d, \"%s\", has won !",
 			vm->last_alive, get_player_name(vm, vm->last_alive));
+}
+
+void		print_processes(t_list *processes)
+{
+	int		i;
+
+	i = 0;
+	while (processes)
+	{
+		ft_printfnl("process %d", i++);
+		processes = processes->next;
+	}
 }

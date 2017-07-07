@@ -35,9 +35,9 @@ uint8_t			get_arg_size(t_arg_type arg_type, char are_indexes)
 }
 
 /*
-** increase the pc of the process based on the sizes of the arguments
+** advance the pc of the process based on the sizes of the arguments
 */
-void			increase_pc(t_process *process, t_op *op)
+void			advance_pc(t_process *process, t_op *op)
 {
 	int		i;
 
@@ -46,7 +46,7 @@ void			increase_pc(t_process *process, t_op *op)
 	i = 0;
 	while (i < op->args_nbr)
 	{
-		process->pc += get_arg_size(op->args_types[i], op->indexes);
+		increase_pc(process, get_arg_size(op->args_types[i], op->indexes));
 		i++;
 	}
 }

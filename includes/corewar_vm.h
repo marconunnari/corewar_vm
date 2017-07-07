@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/30 16:47:13 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/07/07 23:28:05 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/07/08 01:14:05 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void			print_usage();
 void			print_intro(t_vm *vm);
 void			print_winner(t_vm *vm);
 void			print_memory();
+void			print_processes(t_list *processes);
 
 void			parse_args(char **argv, t_vm *vm);
 t_player		parse_player(char *filename);
@@ -90,7 +91,9 @@ t_player		parse_player(char *filename);
 char			*get_player_name(t_vm *vm, int player_nbr);
 t_op			*get_op(uint8_t opcode);
 void			get_op_args(t_vm *vm, t_op *op, int idx, int32_t *args);
-void			increase_pc(t_process *process, t_op *op);
+void			advance_pc(t_process *process, t_op *op);
+void			init_players(t_vm *vm);
+void			increase_pc(t_process *process, int quantity);
 void			exec(t_vm *vm);
 
 void			st(t_vm *vm, t_process *process, t_op *op, int *args);
@@ -99,6 +102,7 @@ void			ld(t_vm *vm, t_process *process, t_op *op, int *args);
 void			aff(t_vm *vm, t_process *process, t_op *op, int *args);
 void			xor(t_vm *vm, t_process *process, t_op *op, int *args);
 void			zjmp(t_vm *vm, t_process *process, t_op *op, int *args);
+void			fork_op(t_vm *vm, t_process *process, t_op *op, int *args);
 void			add(t_vm *vm, t_process *process, t_op *op, int *args);
 void			live(t_vm *vm, t_process *process, t_op *op, int *args);
 

@@ -11,32 +11,16 @@ void			print_op(t_op *op, int *args)
 	ft_putchar('\n');
 }
 
-void			start_waiting(t_vm *vm, t_process *process)
+void			exec_op(t_vm *vm, t_process *process, t_op *op)
 {
-	t_op	*op;
-
-	op = get_op(get_uint8_at(vm, process->pc));
-	if (op)
-		process->wait = op->cycles - 2;
-}
-
-void			exec_op(t_vm *vm, t_process *process)
-{
-	t_op		*op;
 	int32_t			args[MAX_ARGS_NUMBER];
 
-	op = get_op(get_uint8_at(vm, process->pc));
-	if (op)
-	{
-		get_op_args(vm, op, process->pc + 1, args);
-		//print_op(op, args);
-		if (op->run)
-			op->run(vm, process, op, args);
-		process->pc++;
-		increase_pc(process, op);
-	}
-	else
-		process->pc++;
+	get_op_args(vm, op, process->pc + 1, args);
+	//print_op(op, args);
+	if (op->run)
+		op->run(vm, process, op, args);
+	increase_pc(process, 1);
+	advance_pc(process, op);
 	process->wait = -1;
 }
 
@@ -44,19 +28,30 @@ void			do_cycle(t_vm *vm)
 {
 	t_list		*processes;
 	t_process	*process;
+	t_op	*op;
 
 	processes = vm->processes;
 	while(processes)
 	{
 		process = (t_process*)processes->content;
-		if (process->wait == -1)
-			start_waiting(vm, process);
-		else if (process->wait == 0)
-			exec_op(vm, process);
+	//	ft_printfnl("process pc %d wait %d", process->pc, process->wait);
+		op = get_op(get_uint8_at(vm, process->pc));
+		if (op)
+		{
+			if (process->wait == -1)
+				process->wait = op->cycles - 2;
+			else if (process->wait == 0)
+				exec_op(vm, process, op);
+			else
+				process->wait--;
+		}
 		else
-			process->wait--;
+		{
+			increase_pc(process, 1);
+		}
 		processes = processes->next;
 	}
+	//ft_printfnl("");
 }
 
 void			exec(t_vm *vm)
@@ -66,14 +61,14 @@ void			exec(t_vm *vm)
 	cycle = 1;
 	while (1)
 	{
-//		ft_printfnl("cycle %ju", cycle);
+		//ft_printfnl("cycle %ju", cycle);
 		do_cycle(vm);
 		if (vm->dump && cycle == vm->dump_cycle + 1)
 		{
 			print_memory(vm);
 			exit(0);
 		}
-		if (cycle == MEM_SIZE)
+		if (cycle == 20482)
 			break;
 		cycle++;
 	}
