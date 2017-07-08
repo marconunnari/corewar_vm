@@ -22,6 +22,7 @@ void			do_cycle(t_vm *vm)
 	while(processes)
 	{
 		process = (t_process*)processes->content;
+ft_printfnl("debug pc %d", process->pc);
 		op = get_op(get_uint8_at(vm, process->pc));
 		if (op)
 		{
@@ -55,11 +56,11 @@ void			exec(t_vm *vm)
 		if (vm->dump && cycle == vm->dump_cycle + 1)
 			dump(vm);
 		if (cycle_to_die < 1)
-			break;
-		if (cycle_to_die == 1)
 			check_up(vm, &cycle_to_die);
 		else
 			cycle_to_die--;
+		if (vm->processes == NULL)
+			break;
 		cycle++;
 	}
 }
