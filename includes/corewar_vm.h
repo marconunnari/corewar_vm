@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/30 16:47:13 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/07/08 01:14:05 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/07/08 18:57:27 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ struct			s_process
 	uint16_t	pc;
 	char		carry;
 	int			wait;
+    int         lives;
 };
 
 struct			s_player

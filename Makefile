@@ -6,12 +6,12 @@
 #    By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/06/09 14:31:16 by mnunnari          #+#    #+#              #
-#    Updated: 2017/07/08 00:17:24 by mnunnari         ###   ########.fr        #
+#    Updated: 2017/07/08 20:01:11 by mnunnari         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME=corewar_vm
-GCC=gcc -Wall -Wextra -Werror
+GCC=gcc -Wall -Wextra -Werror -g #TODO: remove -g
 INCLUDES= -Iincludes -Ilibft/includes
 LIBFT=libft/libft.a
 LFT=-Llibft -lft

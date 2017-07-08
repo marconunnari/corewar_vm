@@ -6,7 +6,7 @@ void		live(t_vm *vm, t_process *process, t_op *op, int *args)
 	char	*player_name;
 
 	(void)op;
-	(void)process;
+    process->lives++;
 	player_nbr = args[0];
 	if ((player_name = get_player_name(vm, player_nbr)))
 	{

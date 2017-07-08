@@ -54,22 +54,77 @@ void			do_cycle(t_vm *vm)
 	//ft_printfnl("");
 }
 
+void            dump(t_vm *vm)
+{
+    print_memory(vm);
+    exit(0);
+}
+
+void            reset_cycle_to_die(int *cycle_to_die, int total_lives)
+{
+    static int      decreases;
+    static int      checkups_without_decrease;
+
+    if (total_lives >= NBR_LIVE || checkups_without_decrease == MAX_CHECKS)
+    {
+        decreases++;
+        *cycle_to_die = CYCLE_TO_DIE - (CYCLE_DELTA * decreases);
+        checkups_without_decrease = 0;
+    }
+    else
+    {
+        *cycle_to_die = CYCLE_TO_DIE - (CYCLE_DELTA * decreases);
+        checkups_without_decrease++;
+    }
+}
+
+int             is_process_dead(void *content, void *param)
+{
+    t_process   *process;
+
+    (void)param;
+    process = (t_process*)content;
+    return (process->lives == 0);
+}
+
+void            check_up(t_vm *vm, int *cycle_to_die)
+{
+    t_list      *current;
+    t_process   *process;
+    int         total_lives; 
+
+	ft_lstremoveif(&vm->processes, NULL, is_process_dead, NULL);
+    total_lives = 0;
+    current = vm->processes;
+    while (current) {
+        process = (t_process*)current->content;
+        total_lives += process->lives;
+        process->lives = 0;
+        current = current->next;
+    }
+    reset_cycle_to_die(cycle_to_die, total_lives);
+}
+
 void			exec(t_vm *vm)
 {
 	uintmax_t	cycle;
+    int         cycle_to_die;
 
 	cycle = 1;
+    cycle_to_die = CYCLE_TO_DIE;
 	while (1)
 	{
+        //ft_printfnl("cycle_to_die %d", cycle_to_die);
 		//ft_printfnl("cycle %ju", cycle);
-		do_cycle(vm);
+    	do_cycle(vm);
 		if (vm->dump && cycle == vm->dump_cycle + 1)
-		{
-			print_memory(vm);
-			exit(0);
-		}
-		if (cycle == 20482)
-			break;
+            dump(vm);
+		if (cycle_to_die < 1)
+            break;
+		if (cycle_to_die == 1)
+			check_up(vm, &cycle_to_die);
+        else
+            cycle_to_die--;
 		cycle++;
 	}
 }
