@@ -85,6 +85,8 @@ void			print_intro(t_vm *vm);
 void			print_winner(t_vm *vm);
 void			print_memory();
 void			print_processes(t_list *processes);
+void			print_op(t_op *op, int *args);
+void			dump(t_vm *vm);
 
 void			parse_args(char **argv, t_vm *vm);
 t_player		parse_player(char *filename);
@@ -95,6 +97,7 @@ void			get_op_args(t_vm *vm, t_op *op, int idx, int32_t *args);
 void			advance_pc(t_process *process, t_op *op);
 void			init_players(t_vm *vm);
 void			increase_pc(t_process *process, int quantity);
+void			check_up(t_vm *vm, int *cycle_to_die);
 void			exec(t_vm *vm);
 
 void			st(t_vm *vm, t_process *process, t_op *op, int *args);

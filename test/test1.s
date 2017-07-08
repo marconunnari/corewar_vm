@@ -1,5 +1,19 @@
 .name "test"
 .comment "test"
 
-live %-1
-fork %100
+live %42
+live %42
+live %42
+live %42
+
+live %42
+live %42
+live %42
+live %42
+
+live %42
+live %42
+live %42
+live %42
+
+fork %5

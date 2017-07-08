@@ -9,7 +9,7 @@ static t_process	*new_process(int player_number, uint16_t pc, char carry)
 	process->pc = pc;
 	process->carry = carry;
 	process->wait = -1;
-    process->lives = 0;
+	process->lives = 0;
 	return (process);
 }
 

@@ -51,7 +51,28 @@ void		print_processes(t_list *processes)
 	i = 0;
 	while (processes)
 	{
-		ft_printfnl("process %d", i++);
+		ft_printfnl("process %d pc %d", i++,
+				((t_process*)processes->content)->pc);
 		processes = processes->next;
 	}
+	ft_putchar('\n');
 }
+
+void		dump(t_vm *vm)
+{
+	print_memory(vm);
+	exit(0);
+}
+
+void			print_op(t_op *op, int *args)
+{
+	int			i;
+
+	ft_printf("%s", op->mnemonic);
+	i = 0;
+	while (i < op->args_nbr)
+		ft_printf(" %d", args[i++]);
+	ft_putchar('\n');
+}
+
+
