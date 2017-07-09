@@ -1,5 +1,8 @@
 #include "corewar_vm.h"
 
+/*
+** reset the variable cycle to die according to the rules of the game
+*/
 void		reset_cycle_to_die(int *cycle_to_die, int total_lives)
 {
 	static int		decreases;
@@ -18,6 +21,10 @@ void		reset_cycle_to_die(int *cycle_to_die, int total_lives)
 	}
 }
 
+/*
+** function passes as parameter to ft_lstremoveif
+** to removing deads objects
+*/
 int		is_process_dead(void *content, void *param)
 {
 	t_process	*process;
@@ -27,6 +34,11 @@ int		is_process_dead(void *content, void *param)
 	return (process->lives == 0);
 }
 
+/*
+** remove the deads processes
+** reset the the cycle_to_die variable according to the rules of the game
+**
+*/
 void		check_up(t_vm *vm, int *cycle_to_die)
 {
 	t_list		*current;

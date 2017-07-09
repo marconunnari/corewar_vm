@@ -41,7 +41,7 @@ void		print_intro(t_vm *vm)
 void		print_winner(t_vm *vm)
 {
 	ft_printfnl("Contestant %d, \"%s\", has won !",
-			vm->last_alive, get_player_name(vm, vm->last_alive));
+			-vm->last_alive, get_player_name(vm, vm->last_alive));
 }
 
 void		print_processes(t_vm *vm)

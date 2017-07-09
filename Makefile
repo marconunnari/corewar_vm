@@ -20,8 +20,8 @@ DSRCS=srcs
 HEADER=includes/corewar_vm.h
 
 SRCS_FILES= main op parse_player endian exec get_op_args output mem_utils \
-		parse_args init_players utils check_up \
-		ops/reg_utils ops/st ops/sti ops/ld ops/aff ops/xor ops/zjmp ops/add \
+		parse_args init_players utils check_up parse_players reg_utils \
+		ops/st ops/sti ops/ld ops/aff ops/xor ops/zjmp ops/add \
 		ops/live ops/fork #new#
 
 SRCS = $(addprefix $(DSRCS)/, $(addsuffix .c, $(SRCS_FILES)))

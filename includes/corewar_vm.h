@@ -90,6 +90,7 @@ void			dump(t_vm *vm);
 
 void			parse_args(char **argv, t_vm *vm);
 t_player		parse_player(char *filename);
+void			parse_players(char **argv, int *i, t_vm *vm);
 
 char			*get_player_name(t_vm *vm, int player_nbr);
 t_op			*get_op(uint8_t opcode);

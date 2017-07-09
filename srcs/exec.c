@@ -1,5 +1,9 @@
 #include "corewar_vm.h"
 
+/*
+** this function execute an operation, advance the pc
+** of the process and set the operation to be scheduled
+*/
 void			exec_op(t_vm *vm, t_process *process, t_op *op)
 {
 	int32_t			args[MAX_ARGS_NUMBER];
@@ -7,11 +11,15 @@ void			exec_op(t_vm *vm, t_process *process, t_op *op)
 	get_op_args(vm, op, process->pc + 1, args);
 	if (op->run)
 		op->run(vm, process, op, args);
-	increase_pc(process, 1);
 	advance_pc(process, op);
 	process->wait = -1;
 }
 
+/*
+** This function executes a cycle of code.
+** Itereates over each process and see if it has to wait,
+** execute or schedule
+*/
 void			do_cycle(t_vm *vm)
 {
 	t_list		*processes;
@@ -40,6 +48,10 @@ void			do_cycle(t_vm *vm)
 	}
 }
 
+/*
+** execute the code in the virtual machine according to the rules of
+** the game. This is where take place the loop of execution.
+*/
 void			exec(t_vm *vm)
 {
 	uintmax_t	cycle;

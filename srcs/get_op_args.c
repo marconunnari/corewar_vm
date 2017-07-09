@@ -41,6 +41,7 @@ void			advance_pc(t_process *process, t_op *op)
 {
 	int		i;
 
+	increase_pc(process, 1);
 	if (op->types_encod)
 		process->pc++;
 	i = 0;
