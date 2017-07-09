@@ -5,7 +5,7 @@ static t_process	*new_process(int player_number, uint16_t pc, char carry)
 	t_process	*process;
 
 	process = (t_process*)malloc(sizeof(t_process));
-	process->registries[0] = player_number;
+	process->registries[0] = -player_number;
 	process->pc = pc;
 	process->carry = carry;
 	process->wait = -1;

@@ -68,7 +68,7 @@ void		parse_players(char **argv, int *i, t_vm *vm)
 void		parse_dump(char **argv, int *i, t_vm *vm)
 {
 	vm->dump = 0;
-	if (ft_strequ(argv[*i], "-d"))
+	if (ft_strequ(argv[*i], "-d") || ft_strequ(argv[*i], "-dump"))
 	{
 		*i += 1;
 		vm->dump = 1;

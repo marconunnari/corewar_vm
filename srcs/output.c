@@ -44,18 +44,19 @@ void		print_winner(t_vm *vm)
 			vm->last_alive, get_player_name(vm, vm->last_alive));
 }
 
-void		print_processes(t_list *processes)
+void		print_processes(t_vm *vm)
 {
-	int		i;
+	t_list		*processes;
+	t_process	*process;
 
-	i = 0;
+	processes = vm->processes;
 	while (processes)
 	{
-		ft_printfnl("process %d pc %d", i++,
-				((t_process*)processes->content)->pc);
+		process = (t_process*)processes->content;
+		ft_printfnl("process: pc %d lives %d",
+				process->pc, process->lives);
 		processes = processes->next;
 	}
-	ft_putchar('\n');
 }
 
 void		dump(t_vm *vm)

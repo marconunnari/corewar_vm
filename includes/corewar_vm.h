@@ -46,7 +46,7 @@ struct			s_process
 	uint16_t	pc;
 	char		carry;
 	int			wait;
-    int         lives;
+	int		lives;
 };
 
 struct			s_player
@@ -83,8 +83,8 @@ uint32_t		get_uint32_at(t_vm *vm, int i);
 void			print_usage();
 void			print_intro(t_vm *vm);
 void			print_winner(t_vm *vm);
+void			print_processes(t_vm *vm);
 void			print_memory();
-void			print_processes(t_list *processes);
 void			print_op(t_op *op, int *args);
 void			dump(t_vm *vm);
 
