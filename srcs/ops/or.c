@@ -1,6 +1,6 @@
 #include "corewar_vm.h"
 
-void		xor(t_vm *vm, t_process *process, t_op *op, int *args)
+void		or(t_vm *vm, t_process *process, t_op *op, int *args)
 {
 	int		val1;
 	int		val2;
@@ -25,7 +25,7 @@ void		xor(t_vm *vm, t_process *process, t_op *op, int *args)
 			return ;
 		val2 = get_reg_val(process, args[1]);
 	}
-	res = val1 ^ val2;
+	res = val1 | val2;
 	reg = args[2];
 	if (!is_reg_valid(reg))
 		return ;
