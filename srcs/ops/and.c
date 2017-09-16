@@ -26,9 +26,6 @@ void		and(t_vm *vm, t_process *process, t_op *op, int *args)
 		val2 = get_reg_val(process, args[1]);
 	}
 	res = val1 & val2;
-	ft_printf("val1 %d \n", val1);
-	ft_printf("val2 %d \n", val2);
-	ft_printf("res %d \n", res);
 	reg = args[2];
 	if (!is_reg_valid(reg))
 		return ;
