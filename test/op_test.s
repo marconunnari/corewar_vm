@@ -7,8 +7,6 @@ ld %97, r2
 ld %103, r3
 and r2, r3, r4
 aff r4
-st r2, 156
-aff r5
 
 #live %42        # 01 | 00 00 00 2a
 

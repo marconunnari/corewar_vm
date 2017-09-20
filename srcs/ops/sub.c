@@ -15,7 +15,6 @@ void		sub(t_vm *vm, t_process *process, t_op *op, int *args)
 	if (!is_reg_valid(args[1]))
 			return ;
 	val2 = get_reg_val(process, args[1]);
-    // which order?
 	res = val1 - val2;
 	reg = args[2];
 	if (!is_reg_valid(reg))
