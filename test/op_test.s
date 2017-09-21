@@ -3,10 +3,12 @@
 
 sti r1, %:live, %1
 live: live %1
-ld %97, r2
-ld %103, r3
-and r2, r3, r4
-aff r4
+#ld %97, r2
+#ld %103, r3
+#and r2, r3, r4
+#aff r4
+ld %1003, r3
+lld %1003, r3
 
 #live %42        # 01 | 00 00 00 2a
 

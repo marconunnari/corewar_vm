@@ -22,7 +22,8 @@ HEADER=includes/corewar_vm.h
 SRCS_FILES= main op parse_player endian exec get_op_args output mem_utils \
 		parse_args init_players utils check_up parse_players reg_utils \
 		ops/st ops/sti ops/ld ops/aff ops/xor ops/zjmp ops/add \
-		ops/live ops/fork ops/sub ops/or ops/and ops/lfork #new#
+		ops/live ops/fork ops/sub ops/or ops/and ops/lfork \
+		ops/lld #new#
 
 SRCS = $(addprefix $(DSRCS)/, $(addsuffix .c, $(SRCS_FILES)))
 OBJS = $(SRCS:$(DSRCS)/%.c=$(DOBJS)/%.o)

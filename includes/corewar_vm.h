@@ -104,6 +104,7 @@ void			exec(t_vm *vm);
 void			st(t_vm *vm, t_process *process, t_op *op, int *args);
 void			sti(t_vm *vm, t_process *process, t_op *op, int *args);
 void			ld(t_vm *vm, t_process *process, t_op *op, int *args);
+void			lld(t_vm *vm, t_process *process, t_op *op, int *args);
 void			aff(t_vm *vm, t_process *process, t_op *op, int *args);
 void			xor(t_vm *vm, t_process *process, t_op *op, int *args);
 void			or(t_vm *vm, t_process *process, t_op *op, int *args);
