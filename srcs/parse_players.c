@@ -71,7 +71,7 @@ void		parse_players(char **argv, int *i, t_vm *vm)
 		player = parse_player(argv[*i]);
 		player.number = player_nbr;
 		vm->players[vm->players_nbr] = player;
-		vm->last_alive = player.number;
+		vm->last_alive = -player.number;
 		vm->players_nbr++;
 		if (vm->players_nbr > MAX_PLAYERS)
 			ft_err(1, "Too many players");

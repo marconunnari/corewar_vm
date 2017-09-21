@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/30 16:47:13 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/09/16 19:22:14 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/09/21 18:20:50 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ void			or(t_vm *vm, t_process *process, t_op *op, int *args);
 void			and(t_vm *vm, t_process *process, t_op *op, int *args);
 void			zjmp(t_vm *vm, t_process *process, t_op *op, int *args);
 void			fork_op(t_vm *vm, t_process *process, t_op *op, int *args);
+void			lfork_op(t_vm *vm, t_process *process, t_op *op, int *args);
 void			add(t_vm *vm, t_process *process, t_op *op, int *args);
 void			sub(t_vm *vm, t_process *process, t_op *op, int *args);
 void			live(t_vm *vm, t_process *process, t_op *op, int *args);

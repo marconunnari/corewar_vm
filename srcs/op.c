@@ -6,7 +6,7 @@
 /*   By: zaz <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/10/04 11:43:01 by zaz               #+#    #+#             */
-/*   Updated: 2017/09/16 19:22:27 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/09/21 18:21:40 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_op	g_op_tab[17] =
 	{"lld", 2, {T_DIR | T_IND, T_REG}, 13, 10, "long load", 1, 0, NULL},
 	{"lldi", 3, {T_REG | T_DIR | T_IND, T_DIR | T_REG, T_REG}, 14, 50,
 		"long load index", 1, 1, NULL},
-	{"lfork", 1, {T_DIR}, 15, 1000, "long fork", 0, 1, NULL},
+	{"lfork", 1, {T_DIR}, 15, 1000, "long fork", 0, 1, lfork_op},
 	{"aff", 1, {T_REG}, 16, 2, "aff", 1, 0, aff},
 	{0, 0, {0}, 0, 0, 0, 0, 0, NULL}
 };

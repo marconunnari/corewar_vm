@@ -6,7 +6,7 @@
 #    By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/06/09 14:31:16 by mnunnari          #+#    #+#              #
-#    Updated: 2017/09/16 19:22:40 by mnunnari         ###   ########.fr        #
+#    Updated: 2017/09/21 18:21:28 by mnunnari         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ HEADER=includes/corewar_vm.h
 SRCS_FILES= main op parse_player endian exec get_op_args output mem_utils \
 		parse_args init_players utils check_up parse_players reg_utils \
 		ops/st ops/sti ops/ld ops/aff ops/xor ops/zjmp ops/add \
-		ops/live ops/fork ops/sub ops/or ops/and #new#
+		ops/live ops/fork ops/sub ops/or ops/and ops/lfork #new#
 
 SRCS = $(addprefix $(DSRCS)/, $(addsuffix .c, $(SRCS_FILES)))
 OBJS = $(SRCS:$(DSRCS)/%.c=$(DOBJS)/%.o)
