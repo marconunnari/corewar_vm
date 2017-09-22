@@ -8,7 +8,7 @@ void		reset_cycle_to_die(int *cycle_to_die, int total_lives)
 	static int		decreases;
 	static int		checkups_without_decrease;
 
-	if (total_lives >= NBR_LIVE || checkups_without_decrease == MAX_CHECKS)
+	if (total_lives >= NBR_LIVE || checkups_without_decrease == MAX_CHECKS - 1)
 	{
 		decreases++;
 		*cycle_to_die = CYCLE_TO_DIE - (CYCLE_DELTA * decreases);
