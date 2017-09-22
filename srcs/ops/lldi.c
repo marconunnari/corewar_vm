@@ -7,6 +7,7 @@ void		lldi(t_vm *vm, t_process *process, t_op *op, int *args)
 	int		val;
 	int		reg;
 
+	idx1 = 0;
 	if (op->args_types[0] == T_DIR)
 		idx1 = args[0];
 	else if (op->args_types[0] == T_IND)
