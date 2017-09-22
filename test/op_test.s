@@ -7,8 +7,11 @@ live: live %1
 #ld %103, r3
 #and r2, r3, r4
 #aff r4
-ld %1003, r3
-lld %1003, r3
+ld %98, r1
+sti r1, %:live, %1
+ldi %:live, %1, r6
+lldi %:live, %1, r6
+aff r6
 
 #live %42        # 01 | 00 00 00 2a
 
