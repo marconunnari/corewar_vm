@@ -41,3 +41,19 @@ void				init_players(t_vm *vm)
 		i++;
 	}
 }
+
+/*
+** set [size] bytes of memory to [size] bytes of [buf]
+** starting at index [idx] of memory
+*/
+void			set_buf(t_vm *vm, int idx, uint8_t *buf, int size)
+{
+	int			i;
+
+	i = 0;
+	while (i < size)
+	{
+		vm->memory[(idx + i) % MEM_SIZE] = buf[i];
+		i++;
+	}
+}
