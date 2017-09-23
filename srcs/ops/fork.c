@@ -13,7 +13,7 @@ void		fork_op(t_vm *vm, t_process *process, t_op *op, int *args)
 		new_process->registries[i] = process->registries[i];
 		i++;
 	}
-	new_process->pc = (process->pc + (args[0] % IDX_MOD)) % MEM_SIZE;
+	new_process->pc = get_address((process->pc) + (args[0] % IDX_MOD));
 	new_process->carry = process->carry;
 	new_process->wait = -1;
 	new_process->lives = process->lives;

@@ -74,6 +74,8 @@ struct			s_vm
 int				is_little_endian();
 void			reverse_endian(int size, uint8_t *value);
 
+
+int			get_address(int index);
 void			set_buf(t_vm *vm, int idx, uint8_t *buf, int size);
 void			set_uint32(t_vm *vm, int i, uint32_t val);
 uint8_t			get_uint8_at(t_vm *vm, int i);
