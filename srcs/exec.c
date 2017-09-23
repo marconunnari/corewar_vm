@@ -62,7 +62,8 @@ void			exec(t_vm *vm)
 	while (1)
 	{
 		//ft_printfnl("cycle_to_die %d", cycle_to_die);
-		ft_printfnl("cycle %ju", cycle);
+		if ((vm->verbosity & 2) == 2)
+			ft_printfnl("It is now cycle %ju", cycle);
 		cycle_to_die--;
 		if (cycle_to_die <= 0)
 			check_up(vm, &cycle_to_die);

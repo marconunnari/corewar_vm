@@ -3,19 +3,19 @@
 void		fork_op(t_vm *vm, t_process *process, t_op *op, int *args)
 {
 	int			i;
-	t_process	*new_process;
+	t_process	*new_proc;
 
 	(void)op;
-	new_process = (t_process*)malloc(sizeof(t_process));
+	new_proc = new_process(0, 0, 0);
 	i = 0;
 	while (i < REG_NUMBER)
 	{
-		new_process->registries[i] = process->registries[i];
+		new_proc->registries[i] = process->registries[i];
 		i++;
 	}
-	new_process->pc = get_address((process->pc) + (args[0] % IDX_MOD));
-	new_process->carry = process->carry;
-	new_process->wait = -1;
-	new_process->lives = process->lives;
-	ft_lstaddnew(&vm->processes, new_process, sizeof(t_process));
+	new_proc->pc = get_address((process->pc) + (args[0] % IDX_MOD));
+	new_proc->carry = process->carry;
+	new_proc->wait = -1;
+	new_proc->lives = process->lives;
+	ft_lstaddnew(&vm->processes, new_proc, sizeof(t_process));
 }

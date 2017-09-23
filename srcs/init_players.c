@@ -1,7 +1,8 @@
 #include "corewar_vm.h"
 
-static t_process	*new_process(int player_number, uint16_t pc, char carry)
+t_process			*new_process(int player_number, uint16_t pc, char carry)
 {
+	static int	process_number;
 	t_process	*process;
 
 	process = (t_process*)malloc(sizeof(t_process));
@@ -10,6 +11,7 @@ static t_process	*new_process(int player_number, uint16_t pc, char carry)
 	process->carry = carry;
 	process->wait = -1;
 	process->lives = 0;
+	process->number = ++process_number;
 	return (process);
 }
 

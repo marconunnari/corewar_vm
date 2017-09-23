@@ -3,7 +3,7 @@
 /*
 ** reset the variable cycle to die according to the rules of the game
 */
-void		reset_cycle_to_die(int *cycle_to_die, int total_lives)
+void		reset_cycle_to_die(t_vm *vm, int *cycle_to_die, int total_lives)
 {
 	static int		decreases;
 	static int		checkups_without_decrease;
@@ -13,6 +13,8 @@ void		reset_cycle_to_die(int *cycle_to_die, int total_lives)
 		decreases++;
 		*cycle_to_die = CYCLE_TO_DIE - (CYCLE_DELTA * decreases);
 		checkups_without_decrease = 0;
+		if ((vm->verbosity & 2) == 2)
+			ft_printfnl("Cycle to die is now %d", *cycle_to_die);
 	}
 	else
 	{
@@ -28,9 +30,12 @@ void		reset_cycle_to_die(int *cycle_to_die, int total_lives)
 int		is_process_dead(void *content, void *param)
 {
 	t_process	*process;
+	t_vm		*vm;
 
-	(void)param;
+	vm = (t_vm*)param;
 	process = (t_process*)content;
+	if ((vm->verbosity & 8) == 8 && process->lives == 0)
+		ft_printfnl("Process %d is dead", process->number);
 	return (process->lives == 0);
 }
 
@@ -45,7 +50,7 @@ void		check_up(t_vm *vm, int *cycle_to_die)
 	t_process	*process;
 	int		total_lives;
 
-	ft_lstremoveif(&vm->processes, NULL, is_process_dead, NULL);
+	ft_lstremoveif(&vm->processes, NULL, is_process_dead, vm);
 	total_lives = 0;
 	current = vm->processes;
 	while (current) {
@@ -54,5 +59,5 @@ void		check_up(t_vm *vm, int *cycle_to_die)
 		process->lives = 0;
 		current = current->next;
 	}
-	reset_cycle_to_die(cycle_to_die, total_lives);
+	reset_cycle_to_die(vm, cycle_to_die, total_lives);
 }

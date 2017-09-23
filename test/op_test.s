@@ -1,7 +1,7 @@
 .name "test"
 .comment "test"
 
-sti r1, %:live, %1
+sti r1, %:live, %6000
 live: live %1
 #ld %97, r2
 #ld %103, r3

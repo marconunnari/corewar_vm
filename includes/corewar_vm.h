@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/30 16:47:13 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/09/21 18:20:50 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/09/23 21:21:54 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ struct			s_process
 	uint16_t	pc;
 	char		carry;
 	int			wait;
-	int		lives;
+	int			lives;
+	int			number;
 };
 
 struct			s_player
@@ -69,6 +70,7 @@ struct			s_vm
 	uint8_t		dump;
 	uintmax_t	dump_cycle;
 	uint8_t		affiche;
+	uint8_t		verbosity;
 };
 
 int				is_little_endian();
@@ -87,7 +89,6 @@ void			print_intro(t_vm *vm);
 void			print_winner(t_vm *vm);
 void			print_processes(t_vm *vm);
 void			print_memory();
-void			print_op(t_op *op, int *args);
 void			dump(t_vm *vm);
 
 void			parse_args(char **argv, t_vm *vm);
@@ -98,6 +99,7 @@ char			*get_player_name(t_vm *vm, int player_nbr);
 t_op			*get_op(uint8_t opcode);
 void			get_op_args(t_vm *vm, t_op *op, int idx, int32_t *args);
 void			advance_pc(t_process *process, t_op *op);
+t_process		*new_process(int player_number, uint16_t pc, char carry);
 void			init_players(t_vm *vm);
 void			increase_pc(t_process *process, int quantity);
 void			check_up(t_vm *vm, int *cycle_to_die);
