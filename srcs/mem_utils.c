@@ -52,5 +52,10 @@ void			set_uint32(t_vm *vm, int i, uint32_t val)
 {
 	if (is_little_endian())
 		reverse_endian(sizeof(val), (uint8_t*)&val);
-	ft_memcpy(&vm->memory[get_address(i)], &val, 4);
+	//ft_printfnl("val %x", val);
+	//ft_printfnl("i %d addr %d", i, get_address(i + 0));
+	vm->memory[get_address(i + 0)] = (val & 0x000000FF) >> 0;
+	vm->memory[get_address(i + 1)] = (val & 0x0000FF00) >> 8;
+	vm->memory[get_address(i + 2)] = (val & 0x00FF0000) >> 16;
+	vm->memory[get_address(i + 3)] = (val & 0xFF000000) >> 24;
 }

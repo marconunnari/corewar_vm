@@ -7,9 +7,9 @@ void		st(t_vm *vm, t_process *process, t_op *op, int *args)
 	int		val;
 
 	reg = args[0];
-	val = get_reg_val(process, reg);
 	if (!is_reg_valid(reg))
 		return ;
+	val = get_reg_val(process, reg);
 	if (op->args_types[1] == T_IND) {
 		idx = args[1];
 		set_uint32(vm, process->pc + (idx % IDX_MOD), val);

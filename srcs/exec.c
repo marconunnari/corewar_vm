@@ -9,6 +9,8 @@ void			exec_op(t_vm *vm, t_process *process, t_op *op)
 	int32_t			args[MAX_ARGS_NUMBER];
 
 	get_op_args(vm, op, process->pc + 1, args);
+	if ((vm->verbosity & 4) == 4)
+		print_op(op, args, process);
 	if (op->run)
 		op->run(vm, process, op, args);
 	advance_pc(process, op);
@@ -61,16 +63,16 @@ void			exec(t_vm *vm)
 	cycle_to_die = CYCLE_TO_DIE;
 	while (1)
 	{
-		if ((vm->verbosity & 2) == 2)
-			ft_printfnl("It is now cycle %ju", cycle);
-		cycle_to_die--;
 		if (cycle_to_die <= 0)
 			check_up(vm, &cycle_to_die);
 		if (vm->processes == NULL)
 			break;
-		do_cycle(vm);
 		if (vm->dump && cycle == vm->dump_cycle + 1)
 			dump(vm);
+		if ((vm->verbosity & 2) == 2)
+			ft_printfnl("It is now cycle %ju", cycle);
+		cycle_to_die--;
+		do_cycle(vm);
 		cycle++;
 	}
 }

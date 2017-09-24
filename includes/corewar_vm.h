@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/30 16:47:13 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/09/23 21:21:54 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/09/24 18:54:13 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ void			print_usage();
 void			print_intro(t_vm *vm);
 void			print_winner(t_vm *vm);
 void			print_processes(t_vm *vm);
+void			print_op(t_op *op, int *args, t_process *process);
 void			print_memory();
 void			dump(t_vm *vm);
 

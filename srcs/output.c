@@ -64,3 +64,14 @@ void		dump(t_vm *vm)
 	print_memory(vm);
 	exit(0);
 }
+
+void			print_op(t_op *op, int *args, t_process *process)
+{
+	int			i;
+
+	ft_printf("P %5d | %s", process->number, op->mnemonic);
+	i = 0;
+	while (i < op->args_nbr)
+		ft_printf(" %d", args[i++]);
+	ft_putchar('\n');
+}
