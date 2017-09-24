@@ -9,7 +9,7 @@ t_process			*new_process(int player_number, uint16_t pc, char carry)
 	process->registries[0] = -player_number;
 	process->pc = pc;
 	process->carry = carry;
-	process->wait = -1;
+	process->wait = 0;
 	process->lives = 0;
 	process->number = ++process_number;
 	return (process);

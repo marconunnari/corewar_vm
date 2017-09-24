@@ -15,7 +15,6 @@ void		fork_op(t_vm *vm, t_process *process, t_op *op, int *args)
 	}
 	new_proc->pc = get_address((process->pc) + (args[0] % IDX_MOD));
 	new_proc->carry = process->carry;
-	new_proc->wait = -1;
 	new_proc->lives = process->lives;
 	ft_lstaddnew(&vm->processes, new_proc, sizeof(t_process));
 }

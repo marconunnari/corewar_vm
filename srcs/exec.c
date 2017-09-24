@@ -12,7 +12,7 @@ void			exec_op(t_vm *vm, t_process *process, t_op *op)
 	if (op->run)
 		op->run(vm, process, op, args);
 	advance_pc(process, op);
-	process->wait = -1;
+	process->wait = 0;
 }
 
 /*
@@ -33,9 +33,9 @@ void			do_cycle(t_vm *vm)
 		op = get_op(get_uint8_at(vm, process->pc));
 		if (op)
 		{
-			if (process->wait == -1)
-				process->wait = op->cycles - 2;
-			else if (process->wait == 0)
+			if (process->wait == 0)
+				process->wait = op->cycles - 1;
+			else if (process->wait == 1)
 				exec_op(vm, process, op);
 			else
 				process->wait--;
@@ -61,7 +61,6 @@ void			exec(t_vm *vm)
 	cycle_to_die = CYCLE_TO_DIE;
 	while (1)
 	{
-		//ft_printfnl("cycle_to_die %d", cycle_to_die);
 		if ((vm->verbosity & 2) == 2)
 			ft_printfnl("It is now cycle %ju", cycle);
 		cycle_to_die--;
