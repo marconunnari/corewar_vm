@@ -39,6 +39,12 @@ int		is_process_dead(void *content, void *param)
 	return (process->lives == 0);
 }
 
+void	free_process(void *content, size_t content_size)
+{
+	(void)content_size;
+	free(content);
+}
+
 /*
 ** remove the deads processes
 ** reset the the cycle_to_die variable according to the rules of the game
@@ -50,7 +56,7 @@ void		check_up(t_vm *vm, int *cycle_to_die)
 	t_process	*process;
 	int		total_lives;
 
-	ft_lstremoveif(&vm->processes, NULL, is_process_dead, vm);
+	ft_lstremoveif(&vm->processes, free_process, is_process_dead, vm);
 	total_lives = 0;
 	current = vm->processes;
 	while (current) {
