@@ -23,7 +23,7 @@ void		xor(t_vm *vm, t_process *process, t_op *op, int *args)
 		val2 = args[1];
 	else if (op->args_types[1] == T_IND)
 		val2 = get_uint32_at(vm, process->pc + args[1]);
-	if (op->args_types[1] == T_REG)
+	else if (op->args_types[1] == T_REG)
 	{
 		if (!is_reg_valid(args[1]))
 			return ;
