@@ -7,7 +7,10 @@
 int		is_reg_valid(int reg)
 {
 	if (reg < 1 || reg > REG_NUMBER)
+	{
+		//ft_printfnl("reg invalid %d", reg);
 		return (0);
+	}
 	return (1);
 }
 

@@ -24,8 +24,12 @@ void		sti(t_vm *vm, t_process *process, t_op *op, int *args)
 	idx2 = 0;
 	if (op->args_types[2] == T_DIR)
 		idx2 = args[2];
-	else if (op->args_types[2] == T_IND)
-		idx2 = get_uint32_at(vm, process->pc + (args[2] % IDX_MOD));
+	else if (op->args_types[2] == T_REG)
+	{
+		if (!is_reg_valid(args[2]))
+			return ;
+		idx2 = get_reg_val(process, args[2]);
+	}
 	idx = idx1 + idx2;
 	set_uint32(vm, process->pc + (idx % IDX_MOD), get_reg_val(process, reg));
 }
