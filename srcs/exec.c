@@ -32,6 +32,24 @@ void			do_cycle(t_vm *vm)
 	while(processes)
 	{
 		process = (t_process*)processes->content;
+
+		if (process->wait == 0)
+		{
+			op = get_op(get_uint8_at(vm, process->pc));
+			if (op)
+			{
+				process->op = op;
+				process->wait = op->cycles - 1;
+			}
+			else
+				increase_pc(process, 1);
+		}
+		else if (process->wait == 1)
+			exec_op(vm, process, process->op);
+		else
+			process->wait--;
+
+		/*
 		op = get_op(get_uint8_at(vm, process->pc));
 		if (op)
 		{
@@ -46,6 +64,8 @@ void			do_cycle(t_vm *vm)
 		{
 			increase_pc(process, 1);
 		}
+		*/
+
 		processes = processes->next;
 	}
 }

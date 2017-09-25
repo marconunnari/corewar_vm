@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/30 16:47:13 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/09/24 18:54:13 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/09/25 20:02:39 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ struct			s_process
 	int			wait;
 	int			lives;
 	int			number;
+	t_op		*op;
 };
 
 struct			s_player
@@ -79,7 +80,7 @@ void			reverse_endian(int size, uint8_t *value);
 
 int			get_address(int index);
 void			set_buf(t_vm *vm, int idx, uint8_t *buf, int size);
-void			set_uint32(t_vm *vm, int i, uint32_t val);
+void			set_int(t_vm *vm, int i, int val);
 uint8_t			get_uint8_at(t_vm *vm, int i);
 uint16_t		get_uint16_at(t_vm *vm, int i);
 uint32_t		get_uint32_at(t_vm *vm, int i);

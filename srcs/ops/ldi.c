@@ -32,4 +32,7 @@ void		ldi(t_vm *vm, t_process *process, t_op *op, int *args)
 	if (!is_reg_valid(reg))
 		return ;
 	set_reg_val(process, reg, val);
+	if ((vm->verbosity & 4) == 4)
+		ft_printfnl("       | -> load %d from %d + %d = %d (with pc and mod %d)",
+				val, idx1, idx2, idx1 + idx2, process->pc + ((idx1 + idx2) % IDX_MOD));
 }

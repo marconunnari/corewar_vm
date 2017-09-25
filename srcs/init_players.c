@@ -4,9 +4,16 @@ t_process			*new_process(int player_number, uint16_t pc, char carry)
 {
 	static int	process_number;
 	t_process	*process;
+	int			i;
 
 	process = (t_process*)malloc(sizeof(t_process));
 	process->registries[0] = -player_number;
+	i = 1;
+	while (i < REG_NUMBER)
+	{
+		process->registries[i] = 0;
+		i++;
+	}
 	process->pc = pc;
 	process->carry = carry;
 	process->wait = 0;

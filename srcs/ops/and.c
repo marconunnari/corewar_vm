@@ -7,8 +7,6 @@ void		and(t_vm *vm, t_process *process, t_op *op, int *args)
 	int		res;
 	int		reg;
 
-	(void)vm;
-	(void)op;
 	val1 = 0;
 	if (op->args_types[0] == T_DIR)
 		val1 = args[0];

@@ -45,14 +45,12 @@ uint32_t		get_uint32_at(t_vm *vm, int i)
 	return (res);
 }
 
-/*
-** set four bytes of memory starting at index [i] to the four bytes of [val]
-*/
-void			set_uint32(t_vm *vm, int i, uint32_t val)
+void			set_int(t_vm *vm, int i, int val)
 {
+	//ft_printfnl("val %d", val);
+	//ft_printfnl("val %x", val);
 	if (is_little_endian())
 		reverse_endian(sizeof(val), (uint8_t*)&val);
-	//ft_printfnl("val %x", val);
 	//ft_printfnl("i %d addr %d", i, get_address(i + 0));
 	vm->memory[get_address(i + 0)] = (val & 0x000000FF) >> 0;
 	vm->memory[get_address(i + 1)] = (val & 0x0000FF00) >> 8;

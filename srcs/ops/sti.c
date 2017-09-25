@@ -31,7 +31,7 @@ void		sti(t_vm *vm, t_process *process, t_op *op, int *args)
 		idx2 = get_reg_val(process, args[2]);
 	}
 	idx = idx1 + idx2;
-	set_uint32(vm, process->pc + (idx % IDX_MOD), get_reg_val(process, reg));
+	set_int(vm, process->pc + (idx % IDX_MOD), get_reg_val(process, reg));
 	if ((vm->verbosity & 4) == 4)
 		ft_printfnl("       | -> store %d to %d + %d = %d (with pc and mod %d)",
 				get_reg_val(process, reg), idx1, idx2, idx, process->pc + (idx % IDX_MOD));
