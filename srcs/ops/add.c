@@ -1,5 +1,10 @@
 #include "corewar_vm.h"
 
+static void	print(t_process *process, int *args)
+{
+	ft_printfnl("P%5d | add r%d r%d r%d", process->number, args[0], args[1], args[2]);
+}
+
 void		add(t_vm *vm, t_process *process, t_op *op, int *args)
 {
 	int		val1;
@@ -21,4 +26,6 @@ void		add(t_vm *vm, t_process *process, t_op *op, int *args)
 		return ;
 	set_reg_val(process, reg, res);
 	process->carry = res == 0;
+	if ((vm->verbosity & 4) == 4)
+		print(process, args);
 }

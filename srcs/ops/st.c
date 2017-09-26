@@ -1,5 +1,10 @@
 #include "corewar_vm.h"
 
+static void	print(t_process *process, int *args)
+{
+	ft_printfnl("P%5d | st r%d %d", process->number, args[0], args[1]);
+}
+
 void		st(t_vm *vm, t_process *process, t_op *op, int *args)
 {
 	int		reg;
@@ -18,4 +23,6 @@ void		st(t_vm *vm, t_process *process, t_op *op, int *args)
 		if (is_reg_valid(reg))
 			set_reg_val(process, reg, val);
 	}
+	if ((vm->verbosity & 4) == 4)
+		print(process, args);
 }

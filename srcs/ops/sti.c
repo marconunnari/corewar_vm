@@ -1,5 +1,14 @@
 #include "corewar_vm.h"
 
+static void	print(t_vm *vm, t_process *process, t_op *op, int *args)
+{
+	ft_printfnl("P%5d | sti r%d %d %d", process->number, args[0],
+			op->args_types[1] == T_REG ? get_reg_val(process, args[1]) :
+			op->args_types[1] == T_IND ? get_uint32_at(vm, process->pc + args[1]) : args[1],
+			op->args_types[2] == T_REG ? get_reg_val(process, args[2]) :
+			op->args_types[2] == T_IND ? get_uint32_at(vm, process->pc + args[2]) : args[2]);
+}
+
 void		sti(t_vm *vm, t_process *process, t_op *op, int *args)
 {
 	int		reg;
@@ -33,6 +42,8 @@ void		sti(t_vm *vm, t_process *process, t_op *op, int *args)
 	idx = idx1 + idx2;
 	set_int(vm, process->pc + (idx % IDX_MOD), get_reg_val(process, reg));
 	if ((vm->verbosity & 4) == 4)
-		ft_printfnl("       | -> store %d to %d + %d = %d (with pc and mod %d)",
-				get_reg_val(process, reg), idx1, idx2, idx, process->pc + (idx % IDX_MOD));
+		print(vm, process, op, args);
+	if ((vm->verbosity & 4) == 4)
+		ft_printfnl("       | -> store to %d + %d = %d (with pc and mod %d)",
+			idx1, idx2, idx, process->pc + (idx % IDX_MOD));
 }

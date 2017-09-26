@@ -35,4 +35,7 @@ void		and(t_vm *vm, t_process *process, t_op *op, int *args)
 		return ;
 	set_reg_val(process, reg, res);
 	process->carry = res == 0;
+	if ((vm->verbosity & 4) == 4)
+		ft_printfnl("P%5d | and %d %d r%d", process->number,
+				val1, val2, args[2]);
 }

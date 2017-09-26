@@ -1,5 +1,13 @@
 #include "corewar_vm.h"
 
+static void	print(t_vm *vm, t_process *process, t_op *op, int *args)
+{
+	ft_printfnl("P%5d | lld %d r%d", process->number,
+			op->args_types[0] == T_DIR ? args[0] :
+				get_uint16_at(vm, process->pc + args[0]),
+			args[1]);
+}
+
 void		lld(t_vm *vm, t_process *process, t_op *op, int *args)
 {
 	int		val;
@@ -7,9 +15,12 @@ void		lld(t_vm *vm, t_process *process, t_op *op, int *args)
 
 	val = args[0];
 	if (op->args_types[0] == T_IND)
-		val = get_uint32_at(vm, (process->pc + args[0]));
+		val = get_uint16_at(vm, process->pc + args[0]);
 	reg = args[1];
-	if (is_reg_valid(reg))
-		set_reg_val(process, reg, val);
+	if (!is_reg_valid(reg))
+		return;
+	set_reg_val(process, reg, val);
 	process->carry = val == 0;
+	if ((vm->verbosity & 4) == 4)
+		print(vm, process, op, args);
 }

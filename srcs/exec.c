@@ -9,8 +9,6 @@ void			exec_op(t_vm *vm, t_process *process, t_op *op)
 	int32_t			args[MAX_ARGS_NUMBER];
 
 	get_op_args(vm, op, process->pc + 1, args);
-	if ((vm->verbosity & 4) == 4)
-		print_op(op, args, process);
 	if (op->run)
 		op->run(vm, process, op, args);
 	advance_pc(process, op);

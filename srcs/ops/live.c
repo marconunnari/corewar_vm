@@ -1,11 +1,18 @@
 #include "corewar_vm.h"
 
+static void	print(t_process *process, int *args)
+{
+	ft_printfnl("P%5d | live %d", process->number, args[0]);
+}
+
 void		live(t_vm *vm, t_process *process, t_op *op, int *args)
 {
 	int		player_nbr;
 	char	*player_name;
 
 	(void)op;
+	if ((vm->verbosity & 4) == 4)
+		print(process, args);
 	process->lives++;
 	player_nbr = args[0];
 	if ((player_name = get_player_name(vm, player_nbr)))

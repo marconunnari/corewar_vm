@@ -1,5 +1,15 @@
 #include "corewar_vm.h"
 
+static void	print(t_vm *vm, t_process *process, t_op *op, int *args)
+{
+	ft_printfnl("P%5d | or %d %d r%d", process->number,
+			op->args_types[0] == T_REG ? get_reg_val(process, args[0]) :
+			op->args_types[0] == T_IND ? get_uint32_at(vm, process->pc + args[0]) : args[0],
+			op->args_types[1] == T_REG ? get_reg_val(process, args[1]) :
+			op->args_types[1] == T_IND ? get_uint32_at(vm, process->pc + args[1]) : args[1],
+			args[2]);
+}
+
 void		or(t_vm *vm, t_process *process, t_op *op, int *args)
 {
 	int		val1;
@@ -35,4 +45,6 @@ void		or(t_vm *vm, t_process *process, t_op *op, int *args)
 		return ;
 	set_reg_val(process, reg, res);
 	process->carry = res == 0;
+	if ((vm->verbosity & 4) == 4)
+		print(vm, process, op, args);
 }

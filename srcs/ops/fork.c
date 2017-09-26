@@ -1,5 +1,11 @@
 #include "corewar_vm.h"
 
+static void	print(t_process *process, int *args)
+{
+	ft_printfnl("P%5d | fork %d (%d)", process->number, args[0],
+			get_address((process->pc) + (args[0] % IDX_MOD)));
+}
+
 void		fork_op(t_vm *vm, t_process *process, t_op *op, int *args)
 {
 	int			i;
@@ -17,4 +23,6 @@ void		fork_op(t_vm *vm, t_process *process, t_op *op, int *args)
 	new_proc->carry = process->carry;
 	new_proc->lives = process->lives;
 	ft_lstaddnew(&vm->processes, new_proc, sizeof(t_process));
+	if ((vm->verbosity & 4) == 4)
+		print(process, args);
 }

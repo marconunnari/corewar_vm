@@ -1,5 +1,15 @@
 #include "corewar_vm.h"
 
+static void	print(t_vm *vm, t_process *process, t_op *op, int *args)
+{
+	ft_printfnl("P%5d | ldi %d %d r%d", process->number,
+			op->args_types[0] == T_REG ? get_reg_val(process, args[0]) :
+			op->args_types[0] == T_IND ? get_uint32_at(vm, process->pc + args[0]) : args[0],
+			op->args_types[1] == T_REG ? get_reg_val(process, args[1]) :
+			op->args_types[1] == T_IND ? get_uint32_at(vm, process->pc + args[1]) : args[1],
+			args[2]);
+}
+
 void		ldi(t_vm *vm, t_process *process, t_op *op, int *args)
 {
 	int		idx1;
@@ -33,6 +43,8 @@ void		ldi(t_vm *vm, t_process *process, t_op *op, int *args)
 		return ;
 	set_reg_val(process, reg, val);
 	if ((vm->verbosity & 4) == 4)
-		ft_printfnl("       | -> load %d from %d + %d = %d (with pc and mod %d)",
-				val, idx1, idx2, idx1 + idx2, process->pc + ((idx1 + idx2) % IDX_MOD));
+		print(vm, process, op, args);
+	if ((vm->verbosity & 4) == 4)
+		ft_printfnl("       | -> load from %d + %d = %d (with pc and mod %d)",
+				idx1, idx2, idx1 + idx2, process->pc + ((idx1 + idx2) % IDX_MOD));
 }
