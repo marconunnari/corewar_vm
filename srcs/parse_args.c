@@ -3,9 +3,8 @@
 /*
 ** parse the option -dump or -d followed by a number
 */
-void		parse_dump(char **argv, int *i, t_vm *vm)
+int			parse_dump(char **argv, int *i, t_vm *vm)
 {
-	vm->dump = 0;
 	if (ft_strequ(argv[*i], "-d") || ft_strequ(argv[*i], "-dump"))
 	{
 		*i += 1;
@@ -15,28 +14,30 @@ void		parse_dump(char **argv, int *i, t_vm *vm)
 		else
 			ft_err(1, "option -d must be followed by a positive number");
 		*i += 1;
+		return (1);
 	}
+	return (0);
 }
 
 /*
 ** parse the option -a
 */
-void		parse_aff(char **argv, int *i, t_vm *vm)
+int			parse_aff(char **argv, int *i, t_vm *vm)
 {
-	vm->affiche = 0;
 	if (ft_strequ(argv[*i], "-a"))
 	{
 		vm->affiche = 1;
 		*i += 1;
+		return (1);
 	}
+	return (0);
 }
 
 /*
 ** parse the option -v followed by a number
 */
-void		parse_verbosity(char **argv, int *i, t_vm *vm)
+int			parse_verbosity(char **argv, int *i, t_vm *vm)
 {
-	vm->verbosity = 0;
 	if (ft_strequ(argv[*i], "-v"))
 	{
 		*i += 1;
@@ -45,7 +46,9 @@ void		parse_verbosity(char **argv, int *i, t_vm *vm)
 		else
 			ft_err(1, "option -v must be followed by a positive number");
 		*i += 1;
+		return (1);
 	}
+	return (0);
 }
 
 /*
@@ -53,11 +56,23 @@ void		parse_verbosity(char **argv, int *i, t_vm *vm)
 */
 void		parse_args(char **argv, t_vm *vm)
 {
-	int		i;
+	int			opt;
+	int			i;
 
 	i = 0;
-	parse_dump(argv, &i, vm);
-	parse_aff(argv, &i, vm);
-	parse_verbosity(argv, &i, vm);
+	opt = 1;
+	vm->verbosity = 0;
+	vm->dump = 0;
+	vm->affiche = 0;
+	while (opt)
+	{
+		opt = 0;
+		if (parse_dump(argv, &i, vm))
+			opt = 1;
+		if (parse_aff(argv, &i, vm))
+			opt = 1;
+		if (parse_verbosity(argv, &i, vm))
+			opt = 1;
+	}
 	parse_players(argv, &i, vm);
 }
