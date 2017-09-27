@@ -1,5 +1,13 @@
 #include "corewar_vm.h"
 
+int		is_arg_type_valid(t_arg_type arg_type, t_arg_type arg_type_correct)
+{
+	int		valid;
+
+	valid = (arg_type && (arg_type_correct & arg_type) == arg_type);
+	return (valid);
+}
+
 /*
 ** get player name based on player number
 */
@@ -27,4 +35,12 @@ char	*get_player_name(t_vm *vm, int player_nbr)
 void	increase_pc(t_process *process, int quantity)
 {
 	process->pc = get_address(process->pc + quantity);
+}
+
+int			arg_type_valid(t_arg_type type)
+{
+	int		res;
+
+	res = (type == T_DIR || type == T_IND || type == T_REG);
+	return (res);
 }

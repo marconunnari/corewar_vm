@@ -11,11 +11,12 @@ t_arg_type		get_arg_type(uint8_t encod, int i)
 	enc = (encod & (3 << (6 - i * 2))) >> (6 - i * 2);
 	if (enc == REG_CODE)
 		return (T_REG);
-	if (enc == DIR_CODE)
+	else if (enc == DIR_CODE)
 		return (T_DIR);
-	if (enc == IND_CODE)
+	else if (enc == IND_CODE)
 		return (T_IND);
-	return (0);
+	else
+		return (0);
 }
 
 /*
@@ -37,17 +38,26 @@ uint8_t			get_arg_size(t_arg_type arg_type, char are_indexes)
 /*
 ** advance the pc of the process based on the sizes of the arguments
 */
-void			advance_pc(t_process *process, t_op *op)
+void			advance_pc(t_process *process, t_op *op, int32_t *args)
 {
 	int		i;
+	int		old_pc;
 
 	increase_pc(process, 1);
 	if (op->types_encod)
-		process->pc++;
+		increase_pc(process, 1);
+	old_pc = process->pc;
 	i = 0;
 	while (i < op->args_nbr)
 	{
 		increase_pc(process, get_arg_size(op->args_types[i], op->indexes));
+		if (op->args_types[i] == T_REG && !is_reg_valid(args[i]))
+		{
+			//ft_printfnl("p%5d | reg invalid", process->number);
+			if (op->types_encod)
+				process->pc = old_pc;
+			break;
+		}
 		i++;
 	}
 }
@@ -86,10 +96,11 @@ int32_t			get_arg(t_vm *vm, int *idx, t_arg_type arg_type, char are_indexes)
 ** get the arguments of one operation
 ** put the arguments into the args array
 */
-void			get_op_args(t_vm *vm, t_op *op, int idx, int32_t *args)
+int			get_op_args(t_vm *vm, t_op *op, int idx, int32_t *args)
 {
-	uint8_t		i;
-	uint8_t		encod;
+	uint8_t			i;
+	uint8_t			encod;
+	t_arg_type		arg_type;
 
 	encod = 0;
 	if (op->types_encod)
@@ -98,7 +109,12 @@ void			get_op_args(t_vm *vm, t_op *op, int idx, int32_t *args)
 	while (i < op->args_nbr)
 	{
 		if (encod)
-			op->args_types[i] = get_arg_type(encod, i);
+		{
+			arg_type = get_arg_type(encod, i);
+			op->args_types[i] = arg_type;
+		}
+		else
+			op->args_types[i] = op->possible_args_types[i];
 		i++;
 	}
 	i = 0;
@@ -110,4 +126,5 @@ void			get_op_args(t_vm *vm, t_op *op, int idx, int32_t *args)
 			args[i] = 0;
 		i++;
 	}
+	return (1);
 }

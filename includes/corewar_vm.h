@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/30 16:47:13 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/09/25 20:02:39 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/09/27 21:16:28 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,13 @@ struct			s_op
 {
 	char		*mnemonic;
 	uint8_t		args_nbr;
-	t_arg_type	args_types[3];
+	t_arg_type	possible_args_types[3];
 	uint8_t		opcode;
 	uint32_t	cycles;
 	char		*comment;
 	uint8_t		types_encod;
 	uint8_t		indexes;
+	t_arg_type	args_types[3];
 	t_oprun		run;
 };
 
@@ -78,7 +79,7 @@ int				is_little_endian();
 void			reverse_endian(int size, uint8_t *value);
 
 
-int			get_address(int index);
+int				get_address(int index);
 void			set_buf(t_vm *vm, int idx, uint8_t *buf, int size);
 void			set_int(t_vm *vm, int i, int val);
 uint8_t			get_uint8_at(t_vm *vm, int i);
@@ -99,8 +100,9 @@ void			parse_players(char **argv, int *i, t_vm *vm);
 
 char			*get_player_name(t_vm *vm, int player_nbr);
 t_op			*get_op(uint8_t opcode);
-void			get_op_args(t_vm *vm, t_op *op, int idx, int32_t *args);
-void			advance_pc(t_process *process, t_op *op);
+int				is_arg_type_valid(t_arg_type arg_type, t_arg_type arg_type_correct);
+int				get_op_args(t_vm *vm, t_op *op, int idx, int32_t *args);
+void			advance_pc(t_process *process, t_op *op, int32_t *args);
 t_process		*new_process(int player_number, uint16_t pc, char carry);
 void			init_players(t_vm *vm);
 void			increase_pc(t_process *process, int quantity);

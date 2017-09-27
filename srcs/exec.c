@@ -8,23 +8,22 @@ void			exec_op(t_vm *vm, t_process *process, t_op *op)
 {
 	int32_t			args[MAX_ARGS_NUMBER];
 
-	get_op_args(vm, op, process->pc + 1, args);
-	if (op->run)
+	if (get_op_args(vm, op, process->pc + 1, args))
 		op->run(vm, process, op, args);
-	advance_pc(process, op);
+	advance_pc(process, op, args);
 	process->wait = 0;
 }
 
 /*
 ** This function executes a cycle of code.
-** Itereates over each process and see if it has to wait,
+** Iterates over each process and see if it has to wait,
 ** execute or schedule
 */
 void			do_cycle(t_vm *vm)
 {
 	t_list		*processes;
 	t_process	*process;
-	t_op	*op;
+	t_op		*op;
 
 	processes = vm->processes;
 	while(processes)
