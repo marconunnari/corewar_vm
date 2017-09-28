@@ -14,6 +14,18 @@ int		is_reg_valid(int reg)
 	return (1);
 }
 
+int		is_reg_valid_mod(int reg, t_process *process)
+{
+	if (reg < 1 || reg > REG_NUMBER)
+	{
+		//ft_printfnl("reg invalid %d", reg);
+		process->reg_invalid = 1;
+		return (0);
+	}
+	process->reg_invalid = 0;
+	return (1);
+}
+
 /*
 ** return the value of register [reg] of the process
 */

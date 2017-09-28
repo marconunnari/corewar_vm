@@ -1,34 +1,48 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   xor.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/09/28 21:01:10 by mnunnari          #+#    #+#             */
+/*   Updated: 2017/09/28 21:46:14 by mnunnari         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "corewar_vm.h"
 
-void		xor(t_vm *vm, t_process *process, t_op *op, int *args)
+static int		get_val(t_vm *vm, t_process *process, t_arg_type arg_type, int arg)
+{
+	int		val;
+
+	val = 0;
+	if (arg_type == T_DIR)
+		val = arg;
+	else if (arg_type == T_IND)
+		val = get_int32_at(vm, process->pc + arg);
+	else if (arg_type == T_REG)
+	{
+		if (!is_reg_valid_mod(arg, process))
+			return (0);
+		val = get_reg_val(process, arg);
+	}
+	return (val);
+}
+
+void			xor(t_vm *vm, t_process *process, t_op *op, int *args)
 {
 	int		val1;
 	int		val2;
 	int		res;
 	int		reg;
 
-	val1 = 0;
-	if (op->args_types[0] == T_DIR)
-		val1 = args[0];
-	else if (op->args_types[0] == T_IND)
-		val1 = get_int32_at(vm, process->pc + args[0]);
-	else if (op->args_types[0] == T_REG)
-	{
-		if (!is_reg_valid(args[0]))
-			return ;
-		val1 = get_reg_val(process, args[0]);
-	}
-	val2 = 0;
-	if (op->args_types[1] == T_DIR)
-		val2 = args[1];
-	else if (op->args_types[1] == T_IND)
-		val2 = get_int32_at(vm, process->pc + args[1]);
-	else if (op->args_types[1] == T_REG)
-	{
-		if (!is_reg_valid(args[1]))
-			return ;
-		val2 = get_reg_val(process, args[1]);
-	}
+	val1 = get_val(vm, process, op->args_types[0], args[0]);
+	if (process->reg_invalid)
+		return ;
+	val2 = get_val(vm, process, op->args_types[1], args[1]);
+	if (process->reg_invalid)
+		return ;
 	res = val1 ^ val2;
 	reg = args[2];
 	if (!is_reg_valid(reg))

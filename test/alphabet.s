@@ -26,6 +26,7 @@ startwhile:
 	
 	#next iteration
 	xor %0, %0, r4
-	fork %:startwhile
+	zjmp %:startwhile
+	#fork %:startwhile
 
 endwhile:

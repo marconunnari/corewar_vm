@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/30 16:47:13 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/09/27 21:16:28 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/09/28 21:39:08 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@
 # include <stdio.h>
 # include <inttypes.h>
 
-typedef struct	s_op		t_op;
-typedef struct	s_vm		t_vm;
-typedef struct	s_player	t_player;
-typedef struct	s_process	t_process;
-typedef			void(*t_oprun)(t_vm *vm, t_process *process, t_op*, int*);
+typedef struct s_op			t_op;
+typedef struct s_vm			t_vm;
+typedef struct s_player		t_player;
+typedef struct s_process	t_process;
+typedef void	(*t_oprun)(t_vm *vm, t_process *process, t_op*, int*);
 
 struct			s_op
 {
@@ -43,13 +43,14 @@ struct			s_op
 
 struct			s_process
 {
-	int			registries[REG_NUMBER]; //TODO: consider REG_SIZE?!
+	int			registries[REG_NUMBER];
 	uint16_t	pc;
 	char		carry;
 	int			wait;
 	int			lives;
 	int			number;
 	t_op		*op;
+	uint8_t		reg_invalid;
 };
 
 struct			s_player
@@ -78,13 +79,12 @@ struct			s_vm
 int				is_little_endian();
 void			reverse_endian(int size, uint8_t *value);
 
-
 int				get_address(int index);
 void			set_buf(t_vm *vm, int idx, uint8_t *buf, int size);
 void			set_int(t_vm *vm, int i, int val);
 int8_t			get_int8_at(t_vm *vm, int i);
-int16_t		get_int16_at(t_vm *vm, int i);
-int32_t		get_int32_at(t_vm *vm, int i);
+int16_t			get_int16_at(t_vm *vm, int i);
+int32_t			get_int32_at(t_vm *vm, int i);
 
 void			print_usage();
 void			print_intro(t_vm *vm);
@@ -100,9 +100,9 @@ void			parse_players(char **argv, int *i, t_vm *vm);
 
 char			*get_player_name(t_vm *vm, int player_nbr);
 t_op			*get_op(uint8_t opcode);
-int				is_arg_type_valid(t_arg_type arg_type, t_arg_type arg_type_correct);
+int				is_arg_type_valid(t_arg_type arg_type, t_arg_type correct);
 int				get_op_args(t_vm *vm, t_op *op, int idx, int32_t *args);
-int			get_args_sizes(t_vm *vm, t_process *process, t_op *op);
+int				get_args_sizes(t_vm *vm, t_process *process, t_op *op);
 void			advance_pc(t_vm *vm, t_process *process, int diff_pc);
 t_process		*new_process(int player_number, uint16_t pc, char carry);
 void			init_players(t_vm *vm);
@@ -128,7 +128,9 @@ void			sub(t_vm *vm, t_process *process, t_op *op, int *args);
 void			live(t_vm *vm, t_process *process, t_op *op, int *args);
 
 int				is_reg_valid(int reg);
+int				is_reg_valid_mod(int reg, t_process *process);
 int				get_reg_val(t_process *process, int reg);
 void			set_reg_val(t_process *process, int reg, int val);
-int				parse_arg(t_arg_type type, int val, int *arg, t_process *process);
+int				parse_arg(t_arg_type type, int val, int *arg,
+				t_process *process);
 #endif
