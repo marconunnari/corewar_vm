@@ -6,16 +6,18 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/28 21:48:00 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/09/28 21:48:11 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/09/28 23:00:12 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar_vm.h"
 
-static int		get_val(t_vm *vm, t_process *process, t_arg_type arg_type, int arg)
+static int		get_val(t_vm *vm, t_process *process, t_arg_type arg_type,
+						int arg)
 {
 	int		val;
 
+	process->reg_invalid = 0;
 	val = 0;
 	if (arg_type == T_DIR)
 		val = arg;

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lld.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/09/28 21:58:17 by mnunnari          #+#    #+#             */
+/*   Updated: 2017/09/28 21:58:27 by mnunnari         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "corewar_vm.h"
 
 static void	print(t_vm *vm, t_process *process, t_op *op, int *args)
@@ -18,7 +30,7 @@ void		lld(t_vm *vm, t_process *process, t_op *op, int *args)
 		val = get_int16_at(vm, process->pc + args[0]);
 	reg = args[1];
 	if (!is_reg_valid(reg))
-		return;
+		return ;
 	set_reg_val(process, reg, val);
 	process->carry = val == 0;
 	if ((vm->verbosity & 4) == 4)

@@ -1,13 +1,34 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lldi.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/09/28 22:43:19 by mnunnari          #+#    #+#             */
+/*   Updated: 2017/09/28 22:59:22 by mnunnari         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "corewar_vm.h"
 
-static void	print(t_vm *vm, t_process *process, t_op *op, int *args)
+static int	get_idx(t_vm *vm, t_process *process, t_arg_type type, int arg)
 {
-	ft_printfnl("P%5d | lldi %d %d r%d", process->number,
-			op->args_types[0] == T_REG ? get_reg_val(process, args[0]) :
-			op->args_types[0] == T_IND ? get_int32_at(vm, process->pc + args[0]) : args[0],
-			op->args_types[1] == T_REG ? get_reg_val(process, args[1]) :
-			op->args_types[1] == T_IND ? get_int32_at(vm, process->pc + args[1]) : args[1],
-			args[2]);
+	int		idx;
+
+	process->reg_invalid = 0;
+	idx = 0;
+	if (type == T_DIR)
+		idx = arg;
+	else if (type == T_IND)
+		idx = get_int16_at(vm, (process->pc + arg));
+	else if (type == T_REG)
+	{
+		if (!is_reg_valid_mod(arg, process))
+			return (0);
+		idx = get_reg_val(process, arg);
+	}
+	return (idx);
 }
 
 void		lldi(t_vm *vm, t_process *process, t_op *op, int *args)
@@ -17,26 +38,12 @@ void		lldi(t_vm *vm, t_process *process, t_op *op, int *args)
 	int		val;
 	int		reg;
 
-	idx1 = 0;
-	if (op->args_types[0] == T_DIR)
-		idx1 = args[0];
-	else if (op->args_types[0] == T_IND)
-		idx1 = get_int16_at(vm, (process->pc + args[0]));
-	else if (op->args_types[0] == T_REG)
-	{
-		if (!is_reg_valid(args[0]))
-			return ;
-		idx1 = get_reg_val(process, args[0]);
-	}
-	idx2 = 0;
-	if (op->args_types[1] == T_DIR)
-		idx2 = args[1];
-	else if (op->args_types[1] == T_REG)
-	{
-		if (!is_reg_valid(args[1]))
-			return ;
-		idx2 = get_reg_val(process, args[1]);
-	}
+	idx1 = get_idx(vm, process, op->args_types[0], args[0]);
+	if (process->reg_invalid)
+		return ;
+	idx2 = get_idx(vm, process, op->args_types[1], args[1]);
+	if (process->reg_invalid)
+		return ;
 	val = get_int32_at(vm, process->pc + (idx1 + idx2));
 	reg = args[2];
 	if (!is_reg_valid(reg))
@@ -44,7 +51,8 @@ void		lldi(t_vm *vm, t_process *process, t_op *op, int *args)
 	set_reg_val(process, reg, val);
 	process->carry = val == 0;
 	if ((vm->verbosity & 4) == 4)
-		print(vm, process, op, args);
+		ft_printfnl("P%5d | lldi %d %d r%d", process->number,
+				idx1, idx2, args[2]);
 	if ((vm->verbosity & 4) == 4)
 		ft_printfnl("       | -> load from %d + %d = %d (with pc %d)",
 				idx1, idx2, idx1 + idx2, process->pc + (idx1 + idx2));

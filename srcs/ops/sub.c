@@ -1,8 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sub.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/09/28 22:06:56 by mnunnari          #+#    #+#             */
+/*   Updated: 2017/09/28 22:07:06 by mnunnari         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "corewar_vm.h"
 
 static void	print(t_process *process, int *args)
 {
-	ft_printfnl("P%5d | sub r%d r%d r%d", process->number, args[0], args[1], args[2]);
+	ft_printfnl("P%5d | sub r%d r%d r%d", process->number,
+				args[0], args[1], args[2]);
 }
 
 void		sub(t_vm *vm, t_process *process, t_op *op, int *args)
