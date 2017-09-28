@@ -3,7 +3,7 @@
 static void	print(t_process *process, int *args)
 {
 	ft_printfnl("P%5d | lfork %d (%d)", process->number, args[0],
-			get_address((process->pc) + args[0]));
+			process->pc + args[0]);
 }
 
 void		lfork_op(t_vm *vm, t_process *process, t_op *op, int *args)

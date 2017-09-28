@@ -15,5 +15,5 @@ void		zjmp(t_vm *vm, t_process *process, t_op *op, int *args)
 	if (process->carry)
 		process->pc = get_address(process->pc + (args[0] % IDX_MOD));
 	else
-		advance_pc(vm, process, op, args);
+		advance_pc(vm, process, 3);
 }

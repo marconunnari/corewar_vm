@@ -6,12 +6,16 @@
 */
 void			exec_op(t_vm *vm, t_process *process, t_op *op)
 {
+	int			args_sizes;
+	int			args_valid;
 	int32_t			args[MAX_ARGS_NUMBER];
 
-	if (get_op_args(vm, op, process->pc + 1, args))
+	args_valid = get_op_args(vm, op, process->pc + 1, args);
+	args_sizes = get_args_sizes(vm, process, op);
+	if (args_valid)
 		op->run(vm, process, op, args);
 	if (op->opcode != 9)
-		advance_pc(vm, process, op, args);
+		advance_pc(vm, process, args_sizes);
 	process->wait = 0;
 }
 

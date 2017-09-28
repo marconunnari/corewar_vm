@@ -35,46 +35,41 @@ uint8_t			get_arg_size(t_arg_type arg_type, char are_indexes)
 	return (0);
 }
 
-/*
-** advance the pc of the process based on the sizes of the arguments
-*/
-void			advance_pc(t_vm *vm, t_process *process, t_op *op, int32_t *args)
+int			get_args_sizes(t_vm *vm, t_process *process, t_op *op)
 {
 	int		i;
-	int		old_pc;
-	int		diff_pc;
+	int		res;
 	uint8_t		encod;
-	t_arg_type	arg_type;
 
-	(void)args;
-	diff_pc = 0;
-	old_pc = process->pc;
-	increase_pc(process, 1);
-	diff_pc++;
+	res = 1;
 	encod = 0;
 	if (op->types_encod)
 	{
-		encod = get_int8_at(vm, process->pc);
-		increase_pc(process, 1);
-		diff_pc++;
+		encod = get_int8_at(vm, process->pc + 1);
+		res++;
 	}
 	i = 0;
 	while (i < op->args_nbr)
 	{
-		//if (op->args_types[i] != T_REG || is_reg_valid(args[i]))
 		if (op->types_encod)
-		{
-			arg_type = get_arg_type(encod, i);
-			increase_pc(process, get_arg_size(arg_type, op->indexes));
-			diff_pc += get_arg_size(arg_type, op->indexes);
-		}
+			res += get_arg_size(get_arg_type(encod, i), op->indexes);
 		else
-		{
-			increase_pc(process, get_arg_size(op->args_types[i], op->indexes));
-			diff_pc += get_arg_size(op->args_types[i], op->indexes);
-		}
+			res += get_arg_size(op->args_types[i], op->indexes);
 		i++;
 	}
+	return (res);
+}
+
+/*
+** advance the pc of the process based on the sizes of the arguments
+*/
+void			advance_pc(t_vm *vm, t_process *process, int diff_pc)
+{
+	int		i;
+	int		old_pc;
+
+	old_pc = process->pc;
+	increase_pc(process, diff_pc);
 	if ((vm->verbosity & 16) == 16)
 	{
 		ft_printf("ADV %d (0x%.4x -> 0x%.4x) ", diff_pc, old_pc, old_pc + diff_pc);
