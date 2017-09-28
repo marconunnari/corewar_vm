@@ -1,8 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_up.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/09/28 23:09:48 by mnunnari          #+#    #+#             */
+/*   Updated: 2017/09/28 23:11:01 by mnunnari         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "corewar_vm.h"
 
 /*
 ** reset the variable cycle to die according to the rules of the game
 */
+
 void		reset_cycle_to_die(t_vm *vm, int *cycle_to_die, int total_lives)
 {
 	static int		decreases;
@@ -27,7 +40,8 @@ void		reset_cycle_to_die(t_vm *vm, int *cycle_to_die, int total_lives)
 ** function passes as parameter to ft_lstremoveif
 ** to removing deads objects
 */
-int		is_process_dead(void *content, void *param)
+
+int			is_process_dead(void *content, void *param)
 {
 	t_process	*process;
 	t_vm		*vm;
@@ -39,7 +53,7 @@ int		is_process_dead(void *content, void *param)
 	return (process->lives == 0);
 }
 
-void	free_process(void *content, size_t content_size)
+void		free_process(void *content, size_t content_size)
 {
 	(void)content_size;
 	free(content);
@@ -48,18 +62,19 @@ void	free_process(void *content, size_t content_size)
 /*
 ** remove the deads processes
 ** reset the the cycle_to_die variable according to the rules of the game
-**
 */
+
 void		check_up(t_vm *vm, int *cycle_to_die)
 {
 	t_list		*current;
 	t_process	*process;
-	int		total_lives;
+	int			total_lives;
 
 	ft_lstremoveif(&vm->processes, free_process, is_process_dead, vm);
 	total_lives = 0;
 	current = vm->processes;
-	while (current) {
+	while (current)
+	{
 		process = (t_process*)current->content;
 		total_lives += process->lives;
 		process->lives = 0;

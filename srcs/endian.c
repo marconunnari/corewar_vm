@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   endian.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/09/28 23:08:20 by mnunnari          #+#    #+#             */
+/*   Updated: 2017/09/28 23:09:36 by mnunnari         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "corewar_vm.h"
 
 /*
@@ -12,7 +24,8 @@
 ** |0x00|0x00|0x00|0x01|
 ** +----+----+----+----+
 */
-int		is_little_endian()
+
+int			is_little_endian(void)
 {
 	uint32_t	i;
 	char		*c;
@@ -29,6 +42,7 @@ int		is_little_endian()
 ** reverse the endiannes:
 ** put the last byte in first, the first in the last and so on
 */
+
 void		reverse_endian(int size, uint8_t *value)
 {
 	int			i;

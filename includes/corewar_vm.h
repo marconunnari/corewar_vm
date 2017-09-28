@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/30 16:47:13 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/09/28 21:39:08 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/09/28 23:23:17 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ void			parse_players(char **argv, int *i, t_vm *vm);
 char			*get_player_name(t_vm *vm, int player_nbr);
 t_op			*get_op(uint8_t opcode);
 int				is_arg_type_valid(t_arg_type arg_type, t_arg_type correct);
+t_arg_type		get_arg_type(uint8_t encod, int i);
+uint8_t			get_arg_size(t_arg_type arg_type, char are_indexes);
 int				get_op_args(t_vm *vm, t_op *op, int idx, int32_t *args);
 int				get_args_sizes(t_vm *vm, t_process *process, t_op *op);
 void			advance_pc(t_vm *vm, t_process *process, int diff_pc);

@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_players.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/09/28 23:11:23 by mnunnari          #+#    #+#             */
+/*   Updated: 2017/09/28 23:13:16 by mnunnari         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "corewar_vm.h"
 
-t_process			*new_process(int player_number, uint16_t pc, char carry)
+t_process		*new_process(int player_number, uint16_t pc, char carry)
 {
 	static int	process_number;
 	t_process	*process;
@@ -26,7 +38,8 @@ t_process			*new_process(int player_number, uint16_t pc, char carry)
 ** load the players in memory
 ** create a process for each player and add it to the stack of processes
 */
-void				init_players(t_vm *vm)
+
+void			init_players(t_vm *vm)
 {
 	int			i;
 	uint8_t		buf[CHAMP_MAX_SIZE];
@@ -55,6 +68,7 @@ void				init_players(t_vm *vm)
 ** set [size] bytes of memory to [size] bytes of [buf]
 ** starting at index [idx] of memory
 */
+
 void			set_buf(t_vm *vm, int idx, uint8_t *buf, int size)
 {
 	int			i;

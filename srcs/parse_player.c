@@ -1,12 +1,23 @@
-#include "corewar_vm.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_player.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/09/28 23:36:06 by mnunnari          #+#    #+#             */
+/*   Updated: 2017/09/28 23:36:49 by mnunnari         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-extern uint8_t	memory[MEM_SIZE];
+#include "corewar_vm.h"
 
 /*
 ** check that the first 4 four bytes of the executable file are
 ** equals to the 4 bytes of the magic number
 ** of corewar executables (COREWAR_EXEC_MAGIC in op.h)
 */
+
 void		check_magic(t_player *player)
 {
 	uint32_t	buf;
@@ -25,6 +36,7 @@ void		check_magic(t_player *player)
 ** get the player name from the file:
 ** the number of bytes of player name is defined in op.h
 */
+
 void		parse_player_name(t_player *player)
 {
 	int		ret;
@@ -39,6 +51,7 @@ void		parse_player_name(t_player *player)
 ** get the player size from the file:
 ** this is defined by the 4 bytes after player name
 */
+
 void		parse_player_size(t_player *player)
 {
 	int	ret;
@@ -55,6 +68,7 @@ void		parse_player_size(t_player *player)
 ** get the player comment from the file:
 ** the number of bytes of player comment is defined in op.h
 */
+
 void		parse_player_comment(t_player *player)
 {
 	int	ret;
@@ -70,6 +84,7 @@ void		parse_player_comment(t_player *player)
 ** from the filename passed as command line
 ** then load the player in memory
 */
+
 t_player	parse_player(char *filename)
 {
 	t_player	player;

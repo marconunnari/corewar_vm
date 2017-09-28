@@ -1,8 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_args.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/09/28 23:35:36 by mnunnari          #+#    #+#             */
+/*   Updated: 2017/09/28 23:35:55 by mnunnari         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "corewar_vm.h"
 
 /*
 ** parse the option -dump or -d followed by a number
 */
+
 int			parse_dump(char **argv, int *i, t_vm *vm)
 {
 	if (ft_strequ(argv[*i], "-d") || ft_strequ(argv[*i], "-dump"))
@@ -22,6 +35,7 @@ int			parse_dump(char **argv, int *i, t_vm *vm)
 /*
 ** parse the option -a
 */
+
 int			parse_aff(char **argv, int *i, t_vm *vm)
 {
 	if (ft_strequ(argv[*i], "-a"))
@@ -36,6 +50,7 @@ int			parse_aff(char **argv, int *i, t_vm *vm)
 /*
 ** parse the option -v followed by a number
 */
+
 int			parse_verbosity(char **argv, int *i, t_vm *vm)
 {
 	if (ft_strequ(argv[*i], "-v"))
@@ -51,9 +66,6 @@ int			parse_verbosity(char **argv, int *i, t_vm *vm)
 	return (0);
 }
 
-/*
-** TODO: parsing the options independently by the order
-*/
 void		parse_args(char **argv, t_vm *vm)
 {
 	int			opt;
