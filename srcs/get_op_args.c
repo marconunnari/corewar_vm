@@ -61,7 +61,7 @@ void			advance_pc(t_vm *vm, t_process *process, t_op *op, int32_t *args)
 		ft_printf("ADV %d (0x%.4x -> 0x%.4x) ", new_pc - old_pc, old_pc, new_pc);
 		i = 0;
 		while (i < new_pc - old_pc)
-			ft_printf("%.2x ", vm->memory[get_address(i++)]);
+			ft_printf("%.2x ", vm->memory[get_address(old_pc + i++)]);
 		ft_putchar('\n');
 	}
 }
