@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/28 23:37:04 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/09/28 23:37:39 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/09/29 20:33:40 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@ int			parse_player_nbr(char **argv, int *i, t_vm *vm)
 	if (!argv[*i])
 		print_usage();
 	if (!ft_isint(argv[*i]))
-		ft_err(1, "option -n must be followed by an integer");
+		ft_err(1, "Error: option -n must be followed by an integer");
 	player_nbr = ft_atoi(argv[*i]);
 	*i += 1;
 	if (!is_unique(player_nbr, vm))
-		ft_err(1, "each player number must be unique");
+		ft_err(1, "Error: each player number must be unique");
 	return (player_nbr);
 }
 
@@ -90,7 +90,7 @@ void		parse_players(char **argv, int *i, t_vm *vm)
 		vm->last_alive = -player.number;
 		vm->players_nbr++;
 		if (vm->players_nbr > MAX_PLAYERS)
-			ft_err(1, "Too many players");
+			ft_err(1, "Error: Too many players");
 		*i += 1;
 	}
 }

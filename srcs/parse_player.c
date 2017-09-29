@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/28 23:36:06 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/09/28 23:36:49 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/09/29 20:33:08 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ void		check_magic(t_player *player)
 
 	ret = read(player->fd, &buf, 4);
 	if (ret < 4)
-		ft_err(1, "%s: not a corewar executable", player->filename);
+		ft_err(1, "Error: %s: not a corewar executable", player->filename);
 	if (is_little_endian())
 		reverse_endian((int)sizeof(buf), (uint8_t*)&buf);
 	if (buf != COREWAR_EXEC_MAGIC)
-		ft_err(1, "%s: not a corewar executable", player->filename);
+		ft_err(1, "Error: %s: not a corewar executable", player->filename);
 }
 
 /*
@@ -43,7 +43,7 @@ void		parse_player_name(t_player *player)
 
 	ret = read(player->fd, player->name, PROG_NAME_LENGTH);
 	if (ret < PROG_NAME_LENGTH)
-		ft_err(1, "%s: no player name", player->filename);
+		ft_err(1, "Error: %s: no player name", player->filename);
 	player->name[ret] = 0;
 }
 
@@ -59,9 +59,12 @@ void		parse_player_size(t_player *player)
 	lseek(player->fd, 4, SEEK_CUR);
 	ret = read(player->fd, &player->size, 4);
 	if (ret < 4)
-		ft_err(1, "%s: no player size", player->filename);
+		ft_err(1, "Error: %s: no player size", player->filename);
 	if (is_little_endian())
 		reverse_endian((int)sizeof(player->size), (uint8_t*)&player->size);
+	if (player->size > CHAMP_MAX_SIZE)
+		ft_err(1, "Error: %s: file too large (%d bytes > %d bytes)",
+				player->filename, player->size, CHAMP_MAX_SIZE);
 }
 
 /*
@@ -75,7 +78,7 @@ void		parse_player_comment(t_player *player)
 
 	ret = read(player->fd, player->comment, COMMENT_LENGTH);
 	if (ret < COMMENT_LENGTH)
-		ft_err(1, "%s: no player comment", player->filename);
+		ft_err(1, "Error: %s: no player comment", player->filename);
 	player->comment[ret] = '\0';
 }
 

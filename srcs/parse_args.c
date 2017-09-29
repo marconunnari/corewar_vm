@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/28 23:35:36 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/09/28 23:35:55 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/09/29 20:31:57 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int			parse_dump(char **argv, int *i, t_vm *vm)
 		if (ft_isuintmax(argv[*i]))
 			vm->dump_cycle = ft_atouimax(argv[*i]);
 		else
-			ft_err(1, "option -d must be followed by a positive number");
+			ft_err(1, "Error: option -d must be followed by a positive number");
 		*i += 1;
 		return (1);
 	}
@@ -59,7 +59,7 @@ int			parse_verbosity(char **argv, int *i, t_vm *vm)
 		if (ft_isuintmax(argv[*i]))
 			vm->verbosity = ft_atouimax(argv[*i]);
 		else
-			ft_err(1, "option -v must be followed by a positive number");
+			ft_err(1, "Error: option -v must be followed by a positive number");
 		*i += 1;
 		return (1);
 	}
