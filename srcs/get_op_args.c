@@ -41,23 +41,15 @@ uint8_t			get_arg_size(t_arg_type arg_type, char are_indexes)
 void			advance_pc(t_process *process, t_op *op, int32_t *args)
 {
 	int		i;
-	int		old_pc;
 
 	increase_pc(process, 1);
 	if (op->types_encod)
 		increase_pc(process, 1);
-	old_pc = process->pc;
 	i = 0;
 	while (i < op->args_nbr)
 	{
-		increase_pc(process, get_arg_size(op->args_types[i], op->indexes));
-		if (op->args_types[i] == T_REG && !is_reg_valid(args[i]))
-		{
-			//ft_printfnl("p%5d | reg invalid", process->number);
-			if (op->types_encod)
-				process->pc = old_pc;
-			break;
-		}
+		if (op->args_types[i] != T_REG || is_reg_valid(args[i]))
+			increase_pc(process, get_arg_size(op->args_types[i], op->indexes));
 		i++;
 	}
 }
