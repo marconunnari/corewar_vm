@@ -43,20 +43,32 @@ void			advance_pc(t_vm *vm, t_process *process, t_op *op, int32_t *args)
 	int		i;
 	int		old_pc;
 	int		diff_pc;
+	uint8_t		encod;
+	t_arg_type	arg_type;
 
+	(void)args;
 	diff_pc = 0;
 	old_pc = process->pc;
 	increase_pc(process, 1);
 	diff_pc++;
+	encod = 0;
 	if (op->types_encod)
 	{
+		encod = get_int8_at(vm, process->pc);
 		increase_pc(process, 1);
 		diff_pc++;
 	}
 	i = 0;
 	while (i < op->args_nbr)
 	{
-		if (op->args_types[i] != T_REG || is_reg_valid(args[i]))
+		//if (op->args_types[i] != T_REG || is_reg_valid(args[i]))
+		if (op->types_encod)
+		{
+			arg_type = get_arg_type(encod, i);
+			increase_pc(process, get_arg_size(arg_type, op->indexes));
+			diff_pc += get_arg_size(arg_type, op->indexes);
+		}
+		else
 		{
 			increase_pc(process, get_arg_size(op->args_types[i], op->indexes));
 			diff_pc += get_arg_size(op->args_types[i], op->indexes);
@@ -119,7 +131,7 @@ int			get_op_args(t_vm *vm, t_op *op, int idx, int32_t *args)
 	i = 0;
 	while (i < op->args_nbr)
 	{
-		if (encod)
+		if (op->types_encod)
 		{
 			arg_type = get_arg_type(encod, i);
 			op->args_types[i] = arg_type;
