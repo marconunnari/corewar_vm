@@ -42,7 +42,6 @@ void			advance_pc(t_vm *vm, t_process *process, t_op *op, int32_t *args)
 {
 	int		i;
 	int		old_pc;
-	int		new_pc;
 	int		diff_pc;
 
 	diff_pc = 0;
@@ -64,10 +63,9 @@ void			advance_pc(t_vm *vm, t_process *process, t_op *op, int32_t *args)
 		}
 		i++;
 	}
-	new_pc = process->pc;
 	if ((vm->verbosity & 16) == 16)
 	{
-		ft_printf("ADV %d (0x%.4x -> 0x%.4x) ", diff_pc, old_pc, new_pc);
+		ft_printf("ADV %d (0x%.4x -> 0x%.4x) ", diff_pc, old_pc, old_pc + diff_pc);
 		i = 0;
 		while (i < diff_pc)
 			ft_printf("%.2x ", vm->memory[get_address(old_pc + i++)]);
