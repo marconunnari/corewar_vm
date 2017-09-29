@@ -4,7 +4,7 @@ static void	print(t_vm *vm, t_process *process, t_op *op, int *args)
 {
 	ft_printfnl("P%5d | ld %d r%d", process->number,
 			op->args_types[0] == T_DIR ? args[0] :
-				get_uint32_at(vm, (process->pc + (args[0] % IDX_MOD))),
+				get_int32_at(vm, (process->pc + (args[0] % IDX_MOD))),
 			args[1]);
 }
 
@@ -15,7 +15,7 @@ void		ld(t_vm *vm, t_process *process, t_op *op, int *args)
 
 	val = args[0];
 	if (op->args_types[0] == T_IND)
-		val = get_uint32_at(vm, (process->pc + (args[0] % IDX_MOD)));
+		val = get_int32_at(vm, (process->pc + (args[0] % IDX_MOD)));
 	reg = args[1];
 	if (!is_reg_valid(reg))
 		return;

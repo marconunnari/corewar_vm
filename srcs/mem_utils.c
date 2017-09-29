@@ -12,7 +12,7 @@ int		get_address(int index)
 ** get one byte of memory at index
 ** considering that memory is circular
 */
-uint8_t		get_uint8_at(t_vm *vm, int i)
+int8_t		get_int8_at(t_vm *vm, int i)
 {
 	return (vm->memory[get_address(i)]);
 }
@@ -21,9 +21,9 @@ uint8_t		get_uint8_at(t_vm *vm, int i)
 ** get two bytes of memory at index
 ** considering that memory is circular
 */
-uint16_t		get_uint16_at(t_vm *vm, int i)
+int16_t		get_int16_at(t_vm *vm, int i)
 {
-	uint16_t	res;
+	int16_t	res;
 
 	res = vm->memory[get_address(i)] << 8 |
 		vm->memory[get_address(i + 1)];
@@ -34,9 +34,9 @@ uint16_t		get_uint16_at(t_vm *vm, int i)
 ** get four bytes of memory at index
 ** considering that memory is circular
 */
-uint32_t		get_uint32_at(t_vm *vm, int i)
+int32_t		get_int32_at(t_vm *vm, int i)
 {
-	uint32_t	res;
+	int32_t	res;
 
 	res = 	vm->memory[get_address(i + 3)] |
 			vm->memory[get_address(i + 2)] << 8 |

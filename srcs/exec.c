@@ -10,7 +10,7 @@ void			exec_op(t_vm *vm, t_process *process, t_op *op)
 
 	if (get_op_args(vm, op, process->pc + 1, args))
 		op->run(vm, process, op, args);
-	advance_pc(process, op, args);
+	advance_pc(vm, process, op, args);
 	process->wait = 0;
 }
 
@@ -29,10 +29,9 @@ void			do_cycle(t_vm *vm)
 	while(processes)
 	{
 		process = (t_process*)processes->content;
-
 		if (process->wait == 0)
 		{
-			op = get_op(get_uint8_at(vm, process->pc));
+			op = get_op(get_int8_at(vm, process->pc));
 			if (op)
 			{
 				process->op = op;
@@ -45,24 +44,6 @@ void			do_cycle(t_vm *vm)
 			exec_op(vm, process, process->op);
 		else
 			process->wait--;
-
-		/*
-		op = get_op(get_uint8_at(vm, process->pc));
-		if (op)
-		{
-			if (process->wait == 0)
-				process->wait = op->cycles - 1;
-			else if (process->wait == 1)
-				exec_op(vm, process, op);
-			else
-				process->wait--;
-		}
-		else
-		{
-			increase_pc(process, 1);
-		}
-		*/
-
 		processes = processes->next;
 	}
 }

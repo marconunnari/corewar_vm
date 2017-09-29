@@ -1,15 +1,5 @@
 #include "corewar_vm.h"
 
-static void	print(t_vm *vm, t_process *process, t_op *op, int *args)
-{
-	ft_printfnl("P%5d | xor %d %d r%d", process->number,
-			op->args_types[0] == T_REG ? get_reg_val(process, args[0]) :
-			op->args_types[0] == T_IND ? get_uint32_at(vm, process->pc + args[0]) : args[0],
-			op->args_types[1] == T_REG ? get_reg_val(process, args[1]) :
-			op->args_types[1] == T_IND ? get_uint32_at(vm, process->pc + args[1]) : args[1],
-			args[2]);
-}
-
 void		xor(t_vm *vm, t_process *process, t_op *op, int *args)
 {
 	int		val1;
@@ -21,7 +11,7 @@ void		xor(t_vm *vm, t_process *process, t_op *op, int *args)
 	if (op->args_types[0] == T_DIR)
 		val1 = args[0];
 	else if (op->args_types[0] == T_IND)
-		val1 = get_uint32_at(vm, process->pc + args[0]);
+		val1 = get_int32_at(vm, process->pc + args[0]);
 	else if (op->args_types[0] == T_REG)
 	{
 		if (!is_reg_valid(args[0]))
@@ -32,7 +22,7 @@ void		xor(t_vm *vm, t_process *process, t_op *op, int *args)
 	if (op->args_types[1] == T_DIR)
 		val2 = args[1];
 	else if (op->args_types[1] == T_IND)
-		val2 = get_uint32_at(vm, process->pc + args[1]);
+		val2 = get_int32_at(vm, process->pc + args[1]);
 	else if (op->args_types[1] == T_REG)
 	{
 		if (!is_reg_valid(args[1]))
@@ -46,5 +36,6 @@ void		xor(t_vm *vm, t_process *process, t_op *op, int *args)
 	set_reg_val(process, reg, res);
 	process->carry = res == 0;
 	if ((vm->verbosity & 4) == 4)
-		print(vm, process, op, args);
+		ft_printfnl("P%5d | xor %d %d r%d", process->number,
+				val1, val2, args[2]);
 }

@@ -4,9 +4,9 @@ static void	print(t_vm *vm, t_process *process, t_op *op, int *args)
 {
 	ft_printfnl("P%5d | sti r%d %d %d", process->number, args[0],
 			op->args_types[1] == T_REG ? get_reg_val(process, args[1]) :
-			op->args_types[1] == T_IND ? get_uint32_at(vm, process->pc + args[1]) : args[1],
+			op->args_types[1] == T_IND ? get_int32_at(vm, process->pc + args[1]) : args[1],
 			op->args_types[2] == T_REG ? get_reg_val(process, args[2]) :
-			op->args_types[2] == T_IND ? get_uint32_at(vm, process->pc + args[2]) : args[2]);
+			op->args_types[2] == T_IND ? get_int32_at(vm, process->pc + args[2]) : args[2]);
 }
 
 void		sti(t_vm *vm, t_process *process, t_op *op, int *args)
@@ -23,7 +23,7 @@ void		sti(t_vm *vm, t_process *process, t_op *op, int *args)
 	if (op->args_types[1] == T_DIR)
 		idx1 = args[1];
 	else if (op->args_types[1] == T_IND)
-		idx1 = get_uint32_at(vm, process->pc + (args[1] % IDX_MOD));
+		idx1 = get_int32_at(vm, process->pc + (args[1] % IDX_MOD));
 	else if (op->args_types[1] == T_REG)
 	{
 		if (!is_reg_valid(args[1]))

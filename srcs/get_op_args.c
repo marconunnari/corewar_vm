@@ -38,10 +38,13 @@ uint8_t			get_arg_size(t_arg_type arg_type, char are_indexes)
 /*
 ** advance the pc of the process based on the sizes of the arguments
 */
-void			advance_pc(t_process *process, t_op *op, int32_t *args)
+void			advance_pc(t_vm *vm, t_process *process, t_op *op, int32_t *args)
 {
 	int		i;
+	int		old_pc;
+	int		new_pc;
 
+	old_pc = process->pc;
 	increase_pc(process, 1);
 	if (op->types_encod)
 		increase_pc(process, 1);
@@ -51,6 +54,15 @@ void			advance_pc(t_process *process, t_op *op, int32_t *args)
 		if (op->args_types[i] != T_REG || is_reg_valid(args[i]))
 			increase_pc(process, get_arg_size(op->args_types[i], op->indexes));
 		i++;
+	}
+	new_pc = process->pc;
+	if ((vm->verbosity & 16) == 16)
+	{
+		ft_printf("ADV %d (0x%.4x -> 0x%.4x)", new_pc - old_pc, old_pc, new_pc);
+		i = 0;
+		while (i < new_pc - old_pc)
+			ft_printf(" %.2x", vm->memory[get_address(i++)]);
+		ft_putchar('\n');
 	}
 }
 
@@ -68,17 +80,17 @@ int32_t			get_arg(t_vm *vm, int *idx, t_arg_type arg_type, char are_indexes)
 	size = get_arg_size(arg_type, are_indexes);
 	if (size == 1)
 	{
-		arg1 = get_uint8_at(vm, *idx);
+		arg1 = get_int8_at(vm, *idx);
 		arg4 = arg1;
 	}
 	else if (size == 2)
 	{
-		arg2 = get_uint16_at(vm, *idx);
+		arg2 = get_int16_at(vm, *idx);
 		arg4 = arg2;
 	}
 	else if (size == 4)
 	{
-		arg4 = get_uint32_at(vm, *idx);
+		arg4 = get_int32_at(vm, *idx);
 	}
 	*idx += size;
 	return (arg4);
@@ -96,7 +108,7 @@ int			get_op_args(t_vm *vm, t_op *op, int idx, int32_t *args)
 
 	encod = 0;
 	if (op->types_encod)
-		encod = get_uint8_at(vm, idx++);
+		encod = get_int8_at(vm, idx++);
 	i = 0;
 	while (i < op->args_nbr)
 	{

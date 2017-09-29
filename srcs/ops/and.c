@@ -11,7 +11,7 @@ void		and(t_vm *vm, t_process *process, t_op *op, int *args)
 	if (op->args_types[0] == T_DIR)
 		val1 = args[0];
 	else if (op->args_types[0] == T_IND)
-		val1 = get_uint32_at(vm, process->pc + args[0]);
+		val1 = get_int32_at(vm, process->pc + args[0]);
 	else if (op->args_types[0] == T_REG)
 	{
 		if (!is_reg_valid(args[0]))
@@ -22,7 +22,7 @@ void		and(t_vm *vm, t_process *process, t_op *op, int *args)
 	if (op->args_types[1] == T_DIR)
 		val2 = args[1];
 	else if (op->args_types[1] == T_IND)
-		val2 = get_uint32_at(vm, process->pc + args[1]);
+		val2 = get_int32_at(vm, process->pc + args[1]);
 	else if (op->args_types[1] == T_REG)
 	{
 		if (!is_reg_valid(args[1]))
