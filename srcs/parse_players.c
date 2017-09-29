@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/28 23:37:04 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/09/29 20:33:40 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/09/29 21:08:26 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int			parse_player_nbr(char **argv, int *i, t_vm *vm)
 	player_nbr = ft_atoi(argv[*i]);
 	*i += 1;
 	if (!is_unique(player_nbr, vm))
-		ft_err(1, "Error: each player number must be unique");
+		ft_err(1, "Error: player number %d already used (maybe automatically)", player_nbr);
 	return (player_nbr);
 }
 
