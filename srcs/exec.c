@@ -10,7 +10,8 @@ void			exec_op(t_vm *vm, t_process *process, t_op *op)
 
 	if (get_op_args(vm, op, process->pc + 1, args))
 		op->run(vm, process, op, args);
-	advance_pc(vm, process, op, args);
+	if (op->opcode != 9)
+		advance_pc(vm, process, op, args);
 	process->wait = 0;
 }
 
